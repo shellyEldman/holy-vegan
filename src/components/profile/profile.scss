@@ -1,0 +1,127 @@
+.profile.row {
+
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    flex-grow: 1;
+  }
+
+  .categories-sm {
+    cursor: pointer;
+
+    .fa-chevron-down {
+      font-size: 14px;
+    }
+  }
+
+  .col-lg-2.choose-profile-items {
+    height: 100%;
+    overflow-y: scroll;
+    direction: ltr;
+
+    .category-item {
+      border-bottom-left-radius: 17px;
+      border-top-left-radius: 17px;
+      cursor: pointer;
+    }
+  }
+
+  .col-lg-10.user-profile {
+    height: 100%;
+    overflow-y: scroll;
+    margin-bottom: 70px;
+  }
+
+
+  .fa-pencil-alt {
+    cursor: pointer;
+  }
+
+  .addRecipe {
+    .card {
+      .card-img-top {
+        height: 170px;
+        object-fit: contain;
+      }
+
+      .btn-right {
+        border-bottom-right-radius: 17px;
+        border-top-right-radius: 17px;
+      }
+
+      .btn-left {
+        border-bottom-left-radius: 17px;
+        border-top-left-radius: 17px;
+      }
+
+      .btn-group .middle {
+        width: 2em;
+      }
+    }
+  }
+
+}
+
+.addRecipe {
+  .card {
+    cursor: pointer;
+    &:hover {
+      color: #0ea432 !important;
+    }
+
+    #newImgRecipe {
+      height: 370px;
+      width: 100%;
+      object-fit: cover;
+
+      @media (min-width: 992px) {
+        height: 270px;
+      }
+    }
+
+    .card-text {
+      font-size: 22px;
+      // Small devices (landscape phones, 576px and up)
+      @media (min-width: 576px) {
+        font-size: 17px;
+      }
+    }
+  }
+}
+
+.preview {
+  .fa-circle {
+    font-size: 7px;
+  }
+}
+
+.editRecipe {
+  height: 100%;
+  overflow-y: scroll;
+
+  .card {
+    cursor: pointer;
+
+    &:hover {
+      color: #0ea432 !important;
+    }
+
+    .card-img-top {
+      height: 370px;
+      width: 100%;
+      object-fit: cover;
+
+      @media (min-width: 576px) {
+        height: 270px;
+      }
+    }
+
+    .card-text {
+      font-size: 22px;
+      // Small devices (landscape phones, 576px and up)
+      @media (min-width: 576px) {
+        font-size: 17px;
+      }
+    }
+  }
+}
+

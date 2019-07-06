@@ -1,0 +1,167 @@
+.recipes.row {
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    flex-grow: 1;
+  }
+
+  .categories-sm {
+    cursor: pointer;
+
+    .fa-chevron-down {
+      font-size: 14px;
+    }
+  }
+
+  .col-lg-2.choose-items {
+    height: 100%;
+    overflow-y: scroll;
+    direction: ltr;
+
+    .category-item {
+      border-bottom-left-radius: 17px;
+      border-top-left-radius: 17px;
+      cursor: pointer;
+    }
+  }
+
+  .dropdown-menu {
+    z-index: 2000;
+  }
+
+  .col-lg-10.items {
+    height: 100%;
+    overflow-y: scroll;
+
+    .items-list {
+      margin-bottom: 270px;
+      // Large devices (desktops, 992px and up)
+      @media (min-width: 992px) {
+        margin-bottom: 0;
+      }
+    }
+
+    .searchBar {
+      z-index: 100;
+      -webkit-box-shadow: 0 8px 6px -6px grey;
+      -moz-box-shadow: 0 8px 6px -6px grey;
+      box-shadow: 0 8px 6px -6px grey;
+    }
+
+
+    @media (min-width: 992px) {
+      height: 100%;
+      overflow-y: scroll;
+    }
+  }
+
+
+  .items {
+    .card {
+      cursor: pointer;
+
+      &:hover {
+        color: #0ea432 !important;
+      }
+
+      .card-img-top {
+        height: 370px;
+        width: 100%;
+        object-fit: cover;
+
+        @media (min-width: 576px) {
+          height: 270px;
+        }
+      }
+
+      .card-text {
+        font-size: 22px;
+        // Small devices (landscape phones, 576px and up)
+        @media (min-width: 576px) {
+          font-size: 17px;
+        }
+      }
+    }
+  }
+
+  .recipe {
+    margin-bottom: 170px;
+    // Large devices (desktops, 992px and up)
+    @media (min-width: 992px) {
+      margin-bottom: 70px;
+    }
+
+    .fa-arrow-right {
+      font-size: 14px;
+    }
+
+    .fa-circle {
+      font-size: 7px;
+    }
+
+    .goBack {
+      font-size: 15px;
+      cursor: pointer;
+      text-decoration: none;
+      &:hover {
+        color: #0ea432 !important;
+      }
+    }
+
+    .cart-items {
+      img.img-item-cart {
+        height: 70px;
+        object-fit: cover;
+      }
+
+      .btn-right {
+        border-bottom-right-radius: 17px;
+        border-top-right-radius: 17px;
+      }
+
+      .btn-left {
+        border-bottom-left-radius: 17px;
+        border-top-left-radius: 17px;
+      }
+
+      .btn-group .middle {
+        width: 2em;
+      }
+    }
+
+    img.img-response {
+      height: 170px;
+      object-fit: cover;
+    }
+
+    .fa-user-circle {
+      font-size: 27px;
+    }
+
+  }
+
+  .upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: block;
+
+    .btn {
+      border: 1px solid #292b2c;
+      color: #292b2c;
+      background-color: white;
+      padding: 3px 17px;
+      border-radius: 7px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+  }
+
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+}
+

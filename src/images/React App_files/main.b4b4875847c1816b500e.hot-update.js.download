@@ -1,0 +1,476 @@
+webpackHotUpdate("main",{
+
+/***/ "./src/components/recipes/recipesItems.js":
+/*!************************************************!*\
+  !*** ./src/components/recipes/recipesItems.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _images_cups_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../images/cups.jpg */ "./src/images/cups.jpg");
+/* harmony import */ var _images_cups_jpg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_cups_jpg__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _images_polenta_jpg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../images/polenta.jpg */ "./src/images/polenta.jpg");
+/* harmony import */ var _images_polenta_jpg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_polenta_jpg__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _images_spicy_jpg__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../images/spicy.jpg */ "./src/images/spicy.jpg");
+/* harmony import */ var _images_spicy_jpg__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_images_spicy_jpg__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _recipe__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./recipe */ "./src/components/recipes/recipe.js");
+var _jsxFileName = "C:\\Users\\shely\\webBeast\\vegan-app\\holy-vegan\\src\\components\\recipes\\recipesItems.js";
+
+
+
+
+
+
+
+const RecipesItems = ({
+  category,
+  searchField,
+  setSearchField
+}) => {
+  const AllRecipes = () => {
+    return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 11
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "sticky-top input-group bg-light mb-3 pt-3 searchBar d-none d-lg-flex",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 12
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+      style: {
+        'outline': 'none'
+      },
+      type: "text",
+      className: "form-control",
+      placeholder: "\u05D4\u05E7\u05DC\u05D3 \u05E9\u05DD \u05E9\u05DC \u05DE\u05EA\u05DB\u05D5\u05DF..",
+      value: searchField,
+      onChange: e => setSearchField(e.target.value),
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 13
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "input-group-append",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 16
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+      className: "btn btn-secondary",
+      type: "button",
+      id: "button-addon2",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 17
+      },
+      __self: undefined
+    }, "\u05D7\u05E4\u05E9 \u05DE\u05EA\u05DB\u05D5\u05DF"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "row items-list mt-3 mt-lg-0",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 22
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 27
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 28
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_cups_jpg__WEBPACK_IMPORTED_MODULE_2___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 29
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 30
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 31
+      },
+      __self: undefined
+    }, "\u05D7\u05D8\u05D9\u05E4\u05D9 \u05D2\u05E8\u05E0\u05D5\u05DC\u05D4 \u05D5\u05E9\u05D5\u05E7\u05D5\u05DC\u05D3")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 36
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 37
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_polenta_jpg__WEBPACK_IMPORTED_MODULE_3___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 38
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 39
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 40
+      },
+      __self: undefined
+    }, "\u05D0\u05E6\u05D1\u05E2\u05D5\u05EA \u05E4\u05D5\u05DC\u05E0\u05D8\u05D4")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 45
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 46
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_spicy_jpg__WEBPACK_IMPORTED_MODULE_4___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 47
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 48
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 49
+      },
+      __self: undefined
+    }, "\u05E1\u05E4\u05D9\u05D9\u05E1\u05D9 \u05D8\u05D5\u05E4\u05D5 \u05D5\u05E7\u05E9\u05D9\u05D5")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 54
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 55
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_cups_jpg__WEBPACK_IMPORTED_MODULE_2___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 56
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 57
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 58
+      },
+      __self: undefined
+    }, "\u05D7\u05D8\u05D9\u05E4\u05D9 \u05D2\u05E8\u05E0\u05D5\u05DC\u05D4 \u05D5\u05E9\u05D5\u05E7\u05D5\u05DC\u05D3")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 63
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 64
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_polenta_jpg__WEBPACK_IMPORTED_MODULE_3___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 65
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 66
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 67
+      },
+      __self: undefined
+    }, "\u05D0\u05E6\u05D1\u05E2\u05D5\u05EA \u05E4\u05D5\u05DC\u05E0\u05D8\u05D4")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 72
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 73
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_spicy_jpg__WEBPACK_IMPORTED_MODULE_4___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 74
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 75
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 76
+      },
+      __self: undefined
+    }, "\u05E1\u05E4\u05D9\u05D9\u05E1\u05D9 \u05D8\u05D5\u05E4\u05D5 \u05D5\u05E7\u05E9\u05D9\u05D5")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 81
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 82
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_cups_jpg__WEBPACK_IMPORTED_MODULE_2___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 83
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 84
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 85
+      },
+      __self: undefined
+    }, "\u05D7\u05D8\u05D9\u05E4\u05D9 \u05D2\u05E8\u05E0\u05D5\u05DC\u05D4 \u05D5\u05E9\u05D5\u05E7\u05D5\u05DC\u05D3")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 90
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 91
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_polenta_jpg__WEBPACK_IMPORTED_MODULE_3___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 92
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 93
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 94
+      },
+      __self: undefined
+    }, "\u05D0\u05E6\u05D1\u05E2\u05D5\u05EA \u05E4\u05D5\u05DC\u05E0\u05D8\u05D4")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "col-sm-6 col-md-4 col-xl-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 99
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card mb-3",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 100
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+      src: _images_spicy_jpg__WEBPACK_IMPORTED_MODULE_4___default.a,
+      className: "card-img-top",
+      alt: "cups",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 101
+      },
+      __self: undefined
+    }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "card-body",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 102
+      },
+      __self: undefined
+    }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      className: "card-text text-center font-weight-bolder",
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 103
+      },
+      __self: undefined
+    }, "\u05E1\u05E4\u05D9\u05D9\u05E1\u05D9 \u05D8\u05D5\u05E4\u05D5 \u05D5\u05E7\u05E9\u05D9\u05D5"))))));
+  };
+
+  return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-lg-10 items p-0",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 114
+    },
+    __self: undefined
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container",
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 115
+    },
+    __self: undefined
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], {
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 116
+    },
+    __self: undefined
+  }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/",
+    component: AllRecipes,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 117
+    },
+    __self: undefined
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    exact: true,
+    path: "/recipes",
+    copmonent: AllRecipes,
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 118
+    },
+    __self: undefined
+  }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
+    path: "/recipes/:id",
+    component: _recipe__WEBPACK_IMPORTED_MODULE_5__["default"],
+    __source: {
+      fileName: _jsxFileName,
+      lineNumber: 119
+    },
+    __self: undefined
+  }))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (RecipesItems);
+
+/***/ })
+
+})
+//# sourceMappingURL=main.b4b4875847c1816b500e.hot-update.js.map

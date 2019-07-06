@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<!-- saved from url=(0029)http://localhost:3000/recipes -->
+<html lang="he"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <link rel="shortcut icon" href="http://localhost:3000/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="stylesheet" href="./React App_files/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <link rel="stylesheet" href="./React App_files/bootstrap.min.css" integrity="sha384-vus3nQHTD+5mpDiZ4rkEPlnkcyTP+49BhJ4wJeJunw06ZAp+wzzeBPUXr42fi8If" crossorigin="anonymous">
+    <link href="./React App_files/css" rel="stylesheet">
+
+    <link rel="manifest" href="http://localhost:3000/manifest.json">
+    <!--
+      Notice the use of  in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  <style type="text/css">body {
+    font-family: 'Rubik', sans-serif;
+    unicode-bidi: bidi-override !important;
+    direction: unset !important;
+    text-align:right;
+    margin: 0
+}
+
+.App {
+    display: flex;
+    flex-flow: column;
+    height: 100vh;
+}
+
+ /*Large devices (desktops, 992px and up)*/
+@media (min-width: 992px) {
+    .App {
+        overflow: hidden;
+    }
+}
+
+*:focus {
+    outline-color: inherit !important;
+}
+
+.form-control:focus {
+    border-color: inherit;
+    box-shadow: none;
+}
+
+.btn:focus, .btn:active:focus, .btn.active:focus{
+    outline:none;
+    box-shadow:none;
+}
+
+</style><style type="text/css">.navbar {
+  z-index: 1500; }
+  .navbar .fa-user-circle {
+    font-size: 17px; }
+  .navbar .navbar-brand {
+    font-size: 27px; }
+  .navbar .fa-carrot {
+    color: orange; }
+
+.bottomNav {
+  z-index: 1500;
+  font-size: 19px; }
+  .bottomNav .nav-item {
+    width: 50%; }
+</style><style type="text/css">@media (min-width: 992px) {
+  .shop.row {
+    flex-grow: 1; } }
+
+.shop.row .categories-sm {
+  cursor: pointer; }
+  .shop.row .categories-sm .fa-chevron-down {
+    font-size: 14px; }
+
+.shop.row .col-lg-2.choose-items {
+  height: 100%;
+  overflow-y: scroll;
+  direction: ltr; }
+  .shop.row .col-lg-2.choose-items .category-item {
+    border-bottom-left-radius: 17px;
+    border-top-left-radius: 17px;
+    cursor: pointer; }
+
+.shop.row .dropdown-menu {
+  z-index: 2000; }
+
+.shop.row .col-lg-10.items {
+  height: 100%;
+  overflow-y: scroll; }
+  .shop.row .col-lg-10.items .items-list {
+    margin-bottom: 270px; }
+    @media (min-width: 992px) {
+      .shop.row .col-lg-10.items .items-list {
+        margin-bottom: 0; } }
+  .shop.row .col-lg-10.items .searchBar {
+    z-index: 100;
+    box-shadow: 0 8px 6px -6px grey; }
+  @media (min-width: 992px) {
+    .shop.row .col-lg-10.items {
+      height: 100%;
+      overflow-y: scroll; } }
+
+.shop.row .items .card .card-img-top {
+  height: 170px;
+  object-fit: contain; }
+
+.shop.row .items .card .btn-right {
+  border-bottom-right-radius: 17px;
+  border-top-right-radius: 17px; }
+
+.shop.row .items .card .btn-left {
+  border-bottom-left-radius: 17px;
+  border-top-left-radius: 17px; }
+
+.shop.row .items .card .btn-group .middle {
+  width: 2em; }
+</style><style type="text/css">.login i.fa-carrot {
+  font-size: 37px;
+  color: orange; }
+
+.login .registerLink {
+  cursor: pointer; }
+
+.login form {
+  width: 350px;
+  max-width: 90vw; }
+</style><style type="text/css">@media (min-width: 992px) {
+  .profile.row {
+    flex-grow: 1; } }
+
+.profile.row .categories-sm {
+  cursor: pointer; }
+  .profile.row .categories-sm .fa-chevron-down {
+    font-size: 14px; }
+
+.profile.row .col-lg-2.choose-profile-items {
+  height: 100%;
+  overflow-y: scroll;
+  direction: ltr; }
+  .profile.row .col-lg-2.choose-profile-items .category-item {
+    border-bottom-left-radius: 17px;
+    border-top-left-radius: 17px;
+    cursor: pointer; }
+
+.profile.row .col-lg-10.user-profile {
+  height: 100%;
+  overflow-y: scroll;
+  margin-bottom: 70px; }
+
+.profile.row .fa-pencil-alt {
+  cursor: pointer; }
+
+.profile.row .card .card-img-top {
+  height: 170px;
+  object-fit: contain; }
+
+.profile.row .card .btn-right {
+  border-bottom-right-radius: 17px;
+  border-top-right-radius: 17px; }
+
+.profile.row .card .btn-left {
+  border-bottom-left-radius: 17px;
+  border-top-left-radius: 17px; }
+
+.profile.row .card .btn-group .middle {
+  width: 2em; }
+</style><style type="text/css">@media (min-width: 992px) {
+  .recipes.row {
+    flex-grow: 1; } }
+
+.recipes.row .categories-sm {
+  cursor: pointer; }
+  .recipes.row .categories-sm .fa-chevron-down {
+    font-size: 14px; }
+
+.recipes.row .col-lg-2.choose-items {
+  height: 100%;
+  overflow-y: scroll;
+  direction: ltr; }
+  .recipes.row .col-lg-2.choose-items .category-item {
+    border-bottom-left-radius: 17px;
+    border-top-left-radius: 17px;
+    cursor: pointer; }
+
+.recipes.row .dropdown-menu {
+  z-index: 2000; }
+
+.recipes.row .col-lg-10.items {
+  height: 100%;
+  overflow-y: scroll; }
+  .recipes.row .col-lg-10.items .items-list {
+    margin-bottom: 270px; }
+    @media (min-width: 992px) {
+      .recipes.row .col-lg-10.items .items-list {
+        margin-bottom: 0; } }
+  .recipes.row .col-lg-10.items .searchBar {
+    z-index: 100;
+    box-shadow: 0 8px 6px -6px grey; }
+  @media (min-width: 992px) {
+    .recipes.row .col-lg-10.items {
+      height: 100%;
+      overflow-y: scroll; } }
+
+.recipes.row .items .card {
+  cursor: pointer; }
+  .recipes.row .items .card:hover {
+    color: #0ea432; }
+  .recipes.row .items .card .card-img-top {
+    height: 270px;
+    width: 100%;
+    object-fit: cover; }
+  .recipes.row .items .card .card-text {
+    font-size: 17px; }
+</style></head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div dir="rtl" id="root"><div class="App bg-light"><nav id="mainNav" class="navbar fixed-top shadow-sm navbar-expand-lg navbar-light bg-light border py-2"><a aria-current="page" class="navbar-brand active" href="http://localhost:3000/"><span class="text-success mx-1">הולי-ויגן</span><i class="fas fa-carrot"></i></a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button><div class="collapse navbar-collapse" id="navbarSupportedContent"><ul class="navbar-nav mr-auto"><li class="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent"><a aria-current="page" class="nav-link text-dark active" href="http://localhost:3000/">מתכונים</a></li><li class="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent"><a class="nav-link text-dark" href="http://localhost:3000/shop">חנות</a></li><li class="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent"><a class="nav-link text-dark" href="http://localhost:3000/about">עלינו</a></li><li class="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent"><a class="nav-link text-dark" href="http://localhost:3000/contact">צור קשר</a></li><li class="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent"><a class="nav-link text-dark" href="http://localhost:3000/delivery">מדיניות משלוחים</a></li></ul><ul class="navbar-nav ml-auto d-none d-lg-flex"><li class="nav-item"><a class="nav-link px-lg-2 text-dark" href="http://localhost:3000/profile"><i class="fas fa-user mx-1"></i><span class="mx-1"><span class="font-italic text-success">שלי אלדמן</span></span></a></li><li class="nav-item"><a class="nav-link px-lg-2 border-left text-dark" href="http://localhost:3000/cart"><i class="fas fa-shopping-cart mx-1"></i><span class="mx-1">347.40</span><i class="fas fa-shekel-sign mx-1"></i></a></li></ul></div></nav><ul class="nav fixed-bottom bottomNav d-lg-none border d-flex bg-white py-2"><li class="nav-item flex-fill text-center"><a class="nav-link px-lg-2 text-dark" href="http://localhost:3000/profile"><i class="fas fa-user mx-1"></i><span class="mx-1"><span class="font-italic text-success">שלי אלדמן</span></span></a></li><li class="nav-item flex-fill border-left text-center"><a class="nav-link px-lg-2 text-dark" href="http://localhost:3000/cart"><i class="fas fa-shopping-cart mx-1"></i><span class="mx-1">347.40</span><i class="fas fa-shekel-sign mx-1"></i></a></li></ul></div></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+    <script src="./React App_files/jquery-3.3.1.slim.min.js.download" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="./React App_files/popper.min.js.download" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="./React App_files/bootstrap.min.js.download" integrity="sha384-a9xOd0rz8w0J8zqj1qJic7GPFfyMfoiuDjC9rqXlVOcGO/dmRqzMn34gZYDTel8k" crossorigin="anonymous"></script>
+  <script src="./React App_files/bundle.js.download"></script><script src="./React App_files/0.chunk.js.download"></script><script src="./React App_files/main.chunk.js.download"></script><script src="./React App_files/main.b4b4875847c1816b500e.hot-update.js.download"></script>
+
+</body></html>

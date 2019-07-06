@@ -1,0 +1,24 @@
+.navbar {
+  z-index: 1500;
+
+  .fa-user-circle {
+    font-size: 17px;
+  }
+
+  .navbar-brand {
+    font-size: 27px;
+  }
+
+  .fa-carrot {
+    color: orange;
+  }
+}
+
+.bottomNav {
+  z-index: 1500;
+  font-size: 19px;
+
+  .nav-item {
+    width: 50%;
+  }
+}
