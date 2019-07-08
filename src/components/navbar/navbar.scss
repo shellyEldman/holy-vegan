@@ -1,6 +1,10 @@
 .navbar {
   z-index: 1500;
 
+  .active {
+    color: red;
+  }
+
   .fa-user-circle {
     font-size: 17px;
   }

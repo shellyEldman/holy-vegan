@@ -22,7 +22,7 @@ const RecipesItems = ({recipes, category, searchField, setSearchField}) => {
         return (
             <div key={recipe.id} className="col-sm-6 col-md-4 col-xl-3">
                 <Link to={`/recipes/${recipe.id}`} style={{textDecoration: 'none'}} className="subnav_add">
-                    <div className="card mb-3 text-dark" >
+                    <div className="card shadow-sm mb-3 text-dark" >
                         <img src={recipe.imgUrl} className="card-img-top" alt={recipe.recipeName}/>
                         <div className="card-body">
                             <p className="card-text text-center font-weight-bolder">{recipe.recipeName}</p>

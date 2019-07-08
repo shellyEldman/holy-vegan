@@ -68,8 +68,9 @@ const Recipes = ({match, history}) => {
             <Helmet>
                 <title>מתכונים טבעוניים</title>
                 <meta name="description" content="מגוון מתכונים טבעוניים וללא גלוטן" />
-                <meta name="og:title" property="og:title" content="מגוון מתכונים טבעוניים וללא גלוטן"/>
-                <meta name="twitter:card" content="מגוון מתכונים טבעוניים וללא גלוטן"/>
+                <meta name="keywords" content="מתכונים טבעוניים, הולי ויגן, סופר טבעוני, מצרכים טבעוניים, טבעונות, טבעוני, מתכונים, סופרמרקט טבעוני, חנות טבעונית, מתכונים ללא גלוטן"/>
+                {/*<meta name="og:title" property="og:title" content="מגוון מתכונים טבעוניים וללא גלוטן"/>*/}
+                {/*<meta name="twitter:card" content="מגוון מתכונים טבעוניים וללא גלוטן"/>*/}
             </Helmet>
             <div className="col-lg-2 choose-items d-none d-lg-inline border-right m-0 p-0">
                 <div className="categories-lg mt-3">

@@ -8,6 +8,7 @@ import Login from './components/auth/login';
 import Register from './components/auth/register';
 import Profile from './components/profile/profile';
 import Recipes from './components/recipes/recipes';
+import About from './components/about/about';
 
 function App() {
     return (
@@ -20,6 +21,7 @@ function App() {
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/profile" component={Profile}/>
+                    <Route path="/about" component={About}/>
                     <Route render={() => <Redirect to="/"/>}/>
                 </Switch>
             <BottomNav/>

@@ -2,8 +2,8 @@ import React from 'react';
 import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 
-const BottomNav = ({profile, auth, canBuy}) => {
-    if (!canBuy) {
+const BottomNav = ({profile, auth, shop}) => {
+    if (!shop.canBuy) {
         return null;
     }
     return (
@@ -31,7 +31,7 @@ const mapStateToProps = (state) => {
     return {
         profile: state.firebase.profile,
         auth: state.firebase.auth,
-        canBuy: state.canBuy
+        shop: state.shop
     }
 };
 

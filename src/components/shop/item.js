@@ -17,7 +17,7 @@ const Item = ({item}) => {
 
     return(
         <div className="col-sm-6 col-md-4 col-xl-3" key={item.id}>
-            <div className="card mb-3" style={{'minWidth': '227px'}}>
+            <div className="card shadow-sm mb-3" style={{'minWidth': '227px'}}>
                 <img src={item.imgUrl} className="card-img-top mt-2" alt={item.name}/>
                 <div className="card-body pt-2">
                     <p className="card-title text-center font-weight-bold my-1"><span>{Number.isInteger(item.price) ? item.price : item.price.toFixed(2)}</span> ש"ח</p>

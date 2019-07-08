@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import {connect} from "react-redux";
 import { withRouter } from "react-router-dom";
 
-const Navbar = ({profile, auth, location, canBuy}) => {
+const Navbar = ({profile, auth, location, shop}) => {
     const [pathName, setPathName] = useState('/');
     useEffect(() => {
        setPathName(location.pathname);
@@ -25,7 +25,7 @@ const Navbar = ({profile, auth, location, canBuy}) => {
                     <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <NavLink to="/" className={`nav-link ${pathName === '/' ? 'text-success' : 'text-dark'}`}>מתכונים</NavLink>
                     </li>
-                    {canBuy && <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
+                    {shop.canBuy && <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <NavLink to="/shop" className={`nav-link ${pathName === '/shop' ? 'text-success' : 'text-dark'}`}>חנות</NavLink>
                     </li>}
                     <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
@@ -34,12 +34,12 @@ const Navbar = ({profile, auth, location, canBuy}) => {
                     <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <NavLink to="/contact" className={`nav-link ${pathName === '/contact' ? 'text-success' : 'text-dark'}`}>צור קשר</NavLink>
                     </li>
-                    {canBuy && <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
+                    {shop.canBuy && <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <NavLink to="/delivery" className={`nav-link ${pathName === '/delivery' ? 'text-success' : 'text-dark'}`}>מדיניות משלוחים</NavLink>
                     </li>}
                 </ul>
 
-                {canBuy && <ul className="navbar-nav ml-auto d-none d-lg-flex">
+                {shop.canBuy && <ul className="navbar-nav ml-auto d-none d-lg-flex">
                     <li className="nav-item">
                         <NavLink to={`${auth.uid ? '/profile' : '/login'}`} className={`nav-link px-lg-2 ${(pathName === '/register' || pathName === '/login') ? 'text-success' : 'text-dark'}`}>
                             <i className="fas fa-user mx-1"/><span className="mx-1">
@@ -66,7 +66,7 @@ const mapStateToProps = (state) => {
     return {
         profile: state.firebase.profile,
         auth: state.firebase.auth,
-        canBuy: state.canBuy
+        shop: state.shop
     }
 };
 

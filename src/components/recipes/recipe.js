@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Helmet} from 'react-helmet';
 import InstagramEmbed from 'react-instagram-embed';
 import {firestoreConnect} from "react-redux-firebase";
@@ -12,7 +12,7 @@ import 'moment/locale/he';
 const storage = firebase.storage();
 const db = firebase.firestore();
 
-const Recipe = ({recipe, canBuy, match}) => {
+const Recipe = ({recipe, shop, match}) => {
     const [userName, setUserName] = useState('');
     const [comment, setComment] = useState('');
     const [image, setImage] = useState(null);
@@ -21,13 +21,18 @@ const Recipe = ({recipe, canBuy, match}) => {
     const [loading, setLoading] = useState(false);
     const [commentAdded, setCommentAdded] = useState(false);
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+        console.log('scrolled');
+    }, []);
+
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
             const isImage = (/\.(gif|jpg|jpeg|tiff|png)$/i).test(e.target.files[0].name);
             console.log('size', e.target.files[0].size);
             if (isImage) {
                 const size = e.target.files[0].size;
-                if (size > 9999999) {
+                if (size > (5 * 1024 * 1024)) {
                     setWrongImage('התמונה חורגת מהגודל המקסימלי');
                     setImage(null);
                 } else {
@@ -40,6 +45,7 @@ const Recipe = ({recipe, canBuy, match}) => {
             }
         }
     };
+
 
     const handleSaveComment = () => {
         if (!comment || !userName) {
@@ -116,10 +122,12 @@ const Recipe = ({recipe, canBuy, match}) => {
     return (
         <div className="recipe mt-3 bg-light">
             <Helmet>
+                <meta charSet="utf-8"/>
                 <title>{recipe.recipeName} מתכון טבעוני</title>
                 <meta name="description" content={recipe.introduction}/>
-                <meta name="og:title" property="og:title" content={`${recipe.recipeName} מתכון טבעוני`}/>
-                <meta name="twitter:card" content={`${recipe.recipeName} מתכון טבעוני`}/>
+                <meta name="keywords" content={recipe.recipeName}/>
+                {/*<meta name="og:title" property="og:title" content={`${recipe.recipeName} מתכון טבעוני`}/>*/}
+                {/*<meta name="twitter:card" content={`${recipe.recipeName} מתכון טבעוני`}/>*/}
             </Helmet>
             <div className="container">
                 <div className="row">
@@ -181,7 +189,7 @@ const Recipe = ({recipe, canBuy, match}) => {
                             })}
                         </ul>
 
-                        {canBuy &&
+                        {shop.canBuy &&
                         <button className="btn btn-success btn-block mt-3"><span>רכישת מוצרים עבור מתכון זה</span><i
                             className="fas fa-arrow-left ml-2"/></button>}
 
@@ -208,7 +216,7 @@ const Recipe = ({recipe, canBuy, match}) => {
                             injectScript
                         />}
 
-                        {canBuy &&
+                        {shop.canBuy &&
                         <button className="btn btn-success btn-block mt-4"><span>רכישת מוצרים עבור מתכון זה</span><i
                             className="fas fa-arrow-left ml-2"/></button>}
 
@@ -388,7 +396,7 @@ const mapStateToProps = (state, ownProps) => {
     const recipe = recipes ? recipes[id] : null;
     return {
         recipe,
-        canBuy: state.canBuy
+        shop: state.shop
     };
 };
 
