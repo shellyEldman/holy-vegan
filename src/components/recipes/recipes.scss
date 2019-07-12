@@ -4,11 +4,32 @@
     flex-grow: 1;
   }
 
+  .fa-chevron-down, .fa-chevron-up {
+    font-size: 22px;
+  }
+
   .categories-sm {
     cursor: pointer;
 
     .fa-chevron-down {
       font-size: 14px;
+    }
+  }
+
+  .list-group-item {
+    &:active {
+      background-color: #5cb85c;
+      color: white;
+    }
+  }
+
+  .goToAllRecipes {
+    cursor: pointer;
+    .fa-arrow-left {
+      font-size: 14px;
+    }
+    &:hover {
+      color: #5cb85c !important;
     }
   }
 
@@ -33,7 +54,8 @@
     overflow-y: scroll;
 
     .items-list {
-      margin-bottom: 270px;
+      //margin-bottom: 270px;
+
       // Large devices (desktops, 992px and up)
       @media (min-width: 992px) {
         margin-bottom: 0;
@@ -60,7 +82,7 @@
       cursor: pointer;
 
       &:hover {
-        color: #0ea432 !important;
+        color: #5cb85c !important;
       }
 
       .card-img-top {
@@ -103,7 +125,7 @@
       cursor: pointer;
       text-decoration: none;
       &:hover {
-        color: #0ea432 !important;
+        color: #5cb85c !important;
       }
     }
 

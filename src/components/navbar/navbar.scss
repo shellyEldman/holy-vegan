@@ -1,8 +1,8 @@
 .navbar {
   z-index: 1500;
 
-  .active {
-    color: red;
+  .nav-link {
+    font-size: 17px;
   }
 
   .fa-user-circle {
@@ -15,6 +15,22 @@
 
   .fa-carrot {
     color: orange;
+  }
+
+  li {
+    span {
+      cursor: pointer;
+    }
+  }
+
+  .dropdown-item {
+    &:active {
+      background-color: #5cb85c;
+    }
+  }
+
+  a:focus, a:active {
+    color: #5cb85c !important;
   }
 }
 

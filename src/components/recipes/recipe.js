@@ -20,11 +20,39 @@ const Recipe = ({recipe, shop, match}) => {
     const [wrongImage, setWrongImage] = useState('');
     const [loading, setLoading] = useState(false);
     const [commentAdded, setCommentAdded] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
-        window.scrollTo(0, 0);
-        console.log('scrolled');
-    }, []);
+        if (!scrolled) {
+            window.scrollTo(0, 0);
+            setScrolled(true);
+        }
+        if (recipe) {
+            try {
+                const id = match.params.id;
+                const haveSeen = localStorage.getItem(id);
+                if (!haveSeen) {
+                    localStorage.setItem(id, "true");
+                    let views = recipe.views;
+                    if (views) {
+                        views++;
+                    } else {
+                        views = 1;
+                    }
+                    const updateRecipe = {...recipe, views};
+                    db.collection("recipes").doc(id).set(updateRecipe)
+                        .then(function() {
+                            console.log("Document successfully written!");
+                        })
+                        .catch(function(error) {
+                            console.error("Error writing document: ", error);
+                        });
+                }
+            } catch (e) {
+                console.log('e', e);
+            }
+        }
+    }, [recipe, scrolled, match.params.id]);
 
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
@@ -132,7 +160,8 @@ const Recipe = ({recipe, shop, match}) => {
             <div className="container">
                 <div className="row">
                     <div className="col-lg-6 mb-3">
-                        <Link to="/recipes" className="goBack text-dark"><i className="fas fa-arrow-right mr-1"/><span>חזרה למתכונים</span></Link>
+                        <Link to="/recipes" className="goBack text-dark"><i
+                            className="fas fa-arrow-right mr-1"/><span>חזרה למתכונים</span></Link>
                         <h2 className="font-weight-bolder mt-3">{recipe.recipeName}</h2>
                         <p>{recipe.introduction}</p>
                         <h4 className="font-weight-bolder">מרכיבים</h4>
@@ -292,7 +321,8 @@ const Recipe = ({recipe, shop, match}) => {
                         <div className="border-bottom border-dark pb-3 mb-0 d-flex justify-content-between">
                             <h4 className="font-weight-bolder mb-2">תגובות
                                 ({recipe.comments ? recipe.comments.length : 0})</h4>
-                            <button className="btn btn-sm btn-secondary px-3 py-1" type="button" data-toggle="collapse"
+                            <button className="btn btn-sm btn-secondary px-3 py-1" type="button"
+                                    data-toggle="collapse"
                                     data-target="#collapseComment" aria-expanded="false">
                                 <span>הוספת תגובה</span><i className="fas fa-plus ml-2"/></button>
                         </div>
@@ -344,45 +374,24 @@ const Recipe = ({recipe, shop, match}) => {
                         </div>
 
                         {recipe.comments.length > 0 && recipe.comments.map((comment, i) => {
-                            return(
+                            return (
                                 <div key={i} className="border-bottom border-dark d-flex align-items-start py-3">
                                     <i className="fas fa-user-circle mr-2"/>
-                                        <div>
-                                            <span className="p-0 m-0 text-success font-weight-bolder mr-2">{comment.userName}</span>
-                                            <small className="m-0 p-0 text-muted">{moment(comment.createdAt.toDate()).fromNow()}</small>
-                                            <p className="mt-2 mb-0">{comment.comment}</p>
-                                            {comment.commentImageUrl && <img className="img-response"
-                                                 src={comment.commentImageUrl}
-                                                 alt={recipe.recipeName}/>}
-                                        </div>
+                                    <div>
+                                            <span
+                                                className="p-0 m-0 text-success font-weight-bolder mr-2">{comment.userName}</span>
+                                        <small
+                                            className="m-0 p-0 text-muted">{moment(comment.createdAt.toDate()).fromNow()}</small>
+                                        <p className="mt-2 mb-0">{comment.comment}</p>
+                                        {comment.commentImageUrl && <img className="img-response"
+                                                                         src={comment.commentImageUrl}
+                                                                         alt={recipe.recipeName}/>}
+                                    </div>
                                 </div>
                             )
                         })}
 
-
-
-                        {/*<div className="border-bottom border-dark py-3 d-flex align-items-start">*/}
-                        {/*    <i className="fas fa-user-circle mr-2"/>*/}
-                        {/*    <div>*/}
-                        {/*        <p className="pb-0 mb-0">שלי אלדמן</p>*/}
-                        {/*        <small className="m-0 p-0">23.8.2018</small>*/}
-                        {/*        <p className="m-0 p-0 font-weight-bolder">יצא לי מעולה!!</p>*/}
-                        {/*        <img className="img-response my-2"*/}
-                        {/*             src="https://elavegan.com/wp-content/uploads/2019/01/polenta-fries-with-gluten-free-breading-and-vegan-cashew-garlic-dip.jpg"*/}
-                        {/*             alt="polenta"/>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-                        {/*<div className="border-bottom border-dark py-3 d-flex align-items-start">*/}
-                        {/*    <i className="fas fa-user-circle mr-2"/>*/}
-                        {/*    <div>*/}
-                        {/*        <p className="pb-0 mb-0">יוגב</p>*/}
-                        {/*        <small className="m-0 p-0">1.3.2019</small>*/}
-                        {/*        <p className="m-0 p-0 font-weight-bolder">מתכון נהדר</p>*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
-
                     </div>
-
 
                 </div>
             </div>

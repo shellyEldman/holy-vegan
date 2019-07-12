@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.css';
 import {Switch, Route, Redirect} from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
@@ -9,19 +9,23 @@ import Register from './components/auth/register';
 import Profile from './components/profile/profile';
 import Recipes from './components/recipes/recipes';
 import About from './components/about/about';
+import Contact from './components/contact/contact';
 
-function App() {
+const App = () => {
+    const [category, setCategory] = useState('all');
+
     return (
         <div className="App bg-light">
-            <Navbar/>
+            <Navbar category={category} setCategory={setCategory}/>
                 <Switch>
-                    <Route exact path="/" component={Recipes}/>
-                    <Route path="/recipes" component={Recipes}/>
+                    <Route exact path="/" render={(props) => <Recipes {...props} category={category} setCategory={setCategory}/>}/>
+                    <Route path="/recipes" render={(props) => <Recipes {...props} category={category} setCategory={setCategory}/>}/>
                     <Route path="/shop" component={Shop}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/profile" component={Profile}/>
                     <Route path="/about" component={About}/>
+                    <Route path="/contact" component={Contact}/>
                     <Route render={() => <Redirect to="/"/>}/>
                 </Switch>
             <BottomNav/>

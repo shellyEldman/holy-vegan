@@ -1,0 +1,12 @@
+.contact{
+  @media (min-width: 992px) {
+    flex-grow: 1;
+  }
+  min-height: 90vh;
+  overflow-y: scroll;
+
+  .fa-map-marker-alt, .fa-phone, .fa-envelope {
+    font-size: 22px;
+    color: #5cb85c;
+  }
+}
