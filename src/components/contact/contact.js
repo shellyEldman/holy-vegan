@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import "./contact.scss";
 import firebase from "../../config/fbConfig";
+import {Helmet} from "react-helmet";
 const db = firebase.firestore();
 
 const Contact = () => {
@@ -57,6 +58,10 @@ const Contact = () => {
 
     return (
         <div className="contact mx-0 p-0 bg-light" style={{'marginTop': '68px'}}>
+            <Helmet>
+                <title>הולי ויגן | יצירת קשר</title>
+                <meta name="description" content="צור קשר עם הולי-ויגן" />
+            </Helmet>
             <div className="container mt-3 text-dark">
                 <div className="row">
                     <div className="col-lg-6">

@@ -29,7 +29,7 @@
     }
   }
 
-  a:focus, a:active {
+  a.beActive:focus, a.beActive:active {
     color: #5cb85c !important;
   }
 }

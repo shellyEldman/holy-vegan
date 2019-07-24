@@ -16,18 +16,53 @@
     }
   }
 
-  .list-group-item {
-    &:active {
-      background-color: #5cb85c;
-      color: white;
+  .recipe-items-buy {
+    .card {
+
+      .remove-item, .view-more {
+        cursor: pointer;
+      }
+
+      img {
+        height: 107px;
+        object-fit: cover;
+        max-width: 100%;
+
+        // Small devices (landscape phones, 576px and up)
+        @media (min-width: 576px) {
+          height: 137px;
+        }
+
+        // Large devices (desktops, 992px and up)
+        @media (min-width: 992px) {
+          height: 147px;
+        }
+      }
     }
   }
 
+  .search-list-my-group {
+    max-height: 370px;
+    overflow-y: scroll;
+
+    li {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #5cb85c;
+        color: white;
+      }
+    }
+  }
+
+
   .goToAllRecipes {
     cursor: pointer;
+
     .fa-arrow-left {
       font-size: 14px;
     }
+
     &:hover {
       color: #5cb85c !important;
     }
@@ -78,11 +113,15 @@
 
 
   .items {
-    .card {
+    .card.recipe-main-card {
       cursor: pointer;
+      transition: all .2s ease-in-out;
 
       &:hover {
-        color: #5cb85c !important;
+        @media (min-width: 992px) {
+          //color: #5cb85c !important;
+          transform: scale(1.05);
+        }
       }
 
       .card-img-top {
@@ -124,34 +163,19 @@
       font-size: 15px;
       cursor: pointer;
       text-decoration: none;
+
       &:hover {
         color: #5cb85c !important;
       }
     }
 
-    .cart-items {
-      img.img-item-cart {
-        height: 70px;
-        object-fit: cover;
-      }
-
-      .btn-right {
-        border-bottom-right-radius: 17px;
-        border-top-right-radius: 17px;
-      }
-
-      .btn-left {
-        border-bottom-left-radius: 17px;
-        border-top-left-radius: 17px;
-      }
-
-      .btn-group .middle {
-        width: 2em;
-      }
+    .btn-group .middle {
+      width: 2.8em;
     }
 
+
     img.img-response {
-      height: 170px;
+      height: 70px;
       object-fit: cover;
     }
 
@@ -185,5 +209,30 @@
     opacity: 0;
   }
 
+  .remove-item {
+    font-size: 17px;
+  }
+
 }
 
+.modalItem {
+  .modalImg {
+    height: 170px;
+    object-fit: contain;
+  }
+
+  .relatedItems {
+    height: 107px;
+    object-fit: contain;
+  }
+}
+
+.modalAddToCart {
+  .fa-angle-left {
+    font-size: 15px;
+  }
+
+  .btn-empty {
+    width: 200px;
+  }
+}

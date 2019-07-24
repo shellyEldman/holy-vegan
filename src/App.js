@@ -10,27 +10,31 @@ import Profile from './components/profile/profile';
 import Recipes from './components/recipes/recipes';
 import About from './components/about/about';
 import Contact from './components/contact/contact';
+import Cart from './components/cart/cart';
 
 const App = () => {
     const [category, setCategory] = useState('all');
+    const [searchField, setSearchField] = useState('');
 
     return (
         <div className="App bg-light">
-            <Navbar category={category} setCategory={setCategory}/>
+            <Navbar category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>
                 <Switch>
-                    <Route exact path="/" render={(props) => <Recipes {...props} category={category} setCategory={setCategory}/>}/>
-                    <Route path="/recipes" render={(props) => <Recipes {...props} category={category} setCategory={setCategory}/>}/>
+                    <Route exact path="/" render={(props) => <Recipes {...props} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>}/>
+                    <Route path="/recipes" render={(props) => <Recipes {...props} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>}/>
                     <Route path="/shop" component={Shop}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/profile" component={Profile}/>
                     <Route path="/about" component={About}/>
+                    <Route path="/contact/ser" component={Contact}/>
                     <Route path="/contact" component={Contact}/>
+                    <Route path="/cart" component={Cart}/>
                     <Route render={() => <Redirect to="/"/>}/>
                 </Switch>
             <BottomNav/>
         </div>
     );
-}
+};
 
 export default App;

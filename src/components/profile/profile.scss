@@ -108,7 +108,7 @@
     .card-img-top {
       height: 370px;
       width: 100%;
-      object-fit: cover;
+      object-fit: contain;
 
       @media (min-width: 576px) {
         height: 270px;
@@ -125,3 +125,16 @@
   }
 }
 
+.editItem {
+  .card-img-top{
+    height: 97px;
+    object-fit: contain;
+  }
+}
+
+.addItemsFinal {
+  .card-img-top {
+    height: 97px;
+    object-fit: contain;
+  }
+}

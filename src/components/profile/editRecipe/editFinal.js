@@ -92,6 +92,7 @@ const EditFinal = ({recipe, history, id}) => {
     const [categories, setCategories] = useState([]);
     const [insta, setInsta] = useState('');
     const [comments, setComments] = useState([]);
+    const [recipeIngredients, setRecipeIngredients] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [modalShow, setModalShow] = useState(false);
@@ -118,6 +119,9 @@ const EditFinal = ({recipe, history, id}) => {
             setCategories(recipe.categories);
             setInsta(recipe.insta);
             setComments(recipe.comments);
+            if (recipe.buyRecipeIngredients) {
+                setRecipeIngredients(recipe.buyRecipeIngredients);
+            }
         }
     }, [recipe]);
 
@@ -255,7 +259,8 @@ const EditFinal = ({recipe, history, id}) => {
                             categories,
                             insta,
                             order,
-                            comments
+                            comments,
+                            buyRecipeIngredients: recipeIngredients
                         })
                             .then(function () {
                                 console.log("Document successfully written!");
@@ -277,7 +282,8 @@ const EditFinal = ({recipe, history, id}) => {
                     categories,
                     insta,
                     order,
-                    comments
+                    comments,
+                    buyRecipeIngredients: recipeIngredients
                 })
                     .then(function () {
                         console.log("Document successfully written!");
@@ -460,7 +466,15 @@ const EditFinal = ({recipe, history, id}) => {
                                     <input name="salad" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'salad')}/>
                                 </div>
                             </div>
-                            <p className="form-control">סלטים</p>
+                            <p className="form-control">ירקות וסלטים</p>
+                        </div>
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text">
+                                    <input name="burger" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'burger')}/>
+                                </div>
+                            </div>
+                            <p className="form-control">המבורגר וקציצות</p>
                         </div>
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">

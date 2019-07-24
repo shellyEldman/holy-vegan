@@ -359,6 +359,14 @@ const AddRecipe = ({history}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
+                                    <input name="burger" onChange={handleCheck} type="checkbox"/>
+                                </div>
+                            </div>
+                            <p className="form-control">המבורגר וקציצות</p>
+                        </div>
+                        <div className="input-group mb-3">
+                            <div className="input-group-prepend">
+                                <div className="input-group-text">
                                     <input name="pasta" onChange={handleCheck} type="checkbox"/>
                                 </div>
                             </div>

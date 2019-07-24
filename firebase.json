@@ -8,6 +8,10 @@
     ],
     "rewrites": [
       {
+        "source": "/recipes/id/**",
+        "function": "recipe"
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }

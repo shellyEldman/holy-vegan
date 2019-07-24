@@ -1,0 +1,11 @@
+User-agent: * 
+Disallow: /contact/
+Disallow: /profile/
+Disallow: /shop/
+Disallow: /cart/
+Disallow: /delivery/
+Disallow: /about/
+Disallow: /login/
+Disallow: /register/
+Host: https://holy-vegan.web.app
+Sitemap: https://holy-vegan.web.app/sitemap.xml

@@ -7,6 +7,8 @@ import AddItems from './addItems';
 import AddRecipe from './addRecipe';
 import EditRecipe from './editRecipe/editRecipe';
 import CommentsToApprove from './commentsToApprove';
+import RecipesIngredients from './addRecipeIngredients/recipesIngredients';
+import EditItem from './editItem/editItem';
 
 const Profile = ({auth, profile, signOut, history}) => {
     const [category, setCategory] = useState('user');
@@ -20,6 +22,9 @@ const Profile = ({auth, profile, signOut, history}) => {
             case 'add':
                 setCategoryName('הוספת מוצרים');
                 break;
+            case 'editItem':
+                setCategoryName('עריכת מוצר');
+                break;
             case 'addRecipe':
                 setCategoryName('הוספת מתכון');
                 break;
@@ -28,6 +33,9 @@ const Profile = ({auth, profile, signOut, history}) => {
                 break;
             case 'comments':
                 setCategoryName('תגובות לאישור');
+                break;
+            case 'recipesIngredients':
+                setCategoryName('מוצרים למתכונים');
                 break;
             case 'history':
                 setCategoryName('היסטוריית קניות');
@@ -61,19 +69,28 @@ const Profile = ({auth, profile, signOut, history}) => {
                     </div>
 
                     {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>
-                    <div onClick={() => setCategory('add')}
-                         className={`${category === 'add' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>הוספת
-                        מוצרים
-                    </div>
-                    <div onClick={() => setCategory('addRecipe')}
-                         className={`${category === 'addRecipe' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>הוספת
-                        מתכון</div>
-                    <div onClick={() => setCategory('editRecipe')}
-                         className={`${category === 'editRecipe' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>ערוך
-                        מתכון</div>
-                    <div onClick={() => setCategory('comments')}
-                         className={`${category === 'comments' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>תגובות
-                        לאישור</div>
+                        <div onClick={() => setCategory('add')}
+                             className={`${category === 'add' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>הוספת
+                            מוצרים
+                        </div>
+                        <div onClick={() => setCategory('editItem')}
+                             className={`${category === 'editItem' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>עריכת מוצר
+                        </div>
+                        <div onClick={() => setCategory('addRecipe')}
+                             className={`${category === 'addRecipe' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>הוספת
+                            מתכון
+                        </div>
+                        <div onClick={() => setCategory('editRecipe')}
+                             className={`${category === 'editRecipe' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>ערוך
+                            מתכון
+                        </div>
+                        <div onClick={() => setCategory('recipesIngredients')}
+                             className={`${category === 'recipesIngredients' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>מוצרים למתכונים
+                        </div>
+                        <div onClick={() => setCategory('comments')}
+                             className={`${category === 'comments' ? 'bg-success' : ''} px-2 py-1 mr-1 category-item`}>תגובות
+                            לאישור
+                        </div>
                     </div>}
 
                 </div>
@@ -96,25 +113,39 @@ const Profile = ({auth, profile, signOut, history}) => {
                         </div>
 
                         {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>
-                        <div onClick={() => setCategory('add')} data-toggle="collapse" data-target="#collapseCategories"
-                             className={`py-1 border-bottom ${category === 'add' ? 'text-light' : ''}`}>הוספת
-                            מוצרים</div>
+                            <div onClick={() => setCategory('add')} data-toggle="collapse"
+                                 data-target="#collapseCategories"
+                                 className={`py-1 border-bottom ${category === 'add' ? 'text-light' : ''}`}>הוספת
+                                מוצרים
+                            </div>
+                            <div onClick={() => setCategory('editItem')} data-toggle="collapse"
+                                 data-target="#collapseCategories"
+                                 className={`py-1 border-bottom ${category === 'editItem' ? 'text-light' : ''}`}>עריכת מוצר
+                            </div>
 
-                        <div onClick={() => setCategory('addRecipe')} data-toggle="collapse"
-                             data-target="#collapseCategories"
-                             className={`py-1 ${category === 'addRecipe' ? 'text-light' : ''}`}>הוספת
-                            מתכון</div>
+                            <div onClick={() => setCategory('addRecipe')} data-toggle="collapse"
+                                 data-target="#collapseCategories"
+                                 className={`py-1 ${category === 'addRecipe' ? 'text-light' : ''}`}>הוספת
+                                מתכון
+                            </div>
 
-                        <div onClick={() => setCategory('editRecipe')} data-toggle="collapse"
-                             data-target="#collapseCategories"
-                             className={`py-1 ${category === 'editRecipe' ? 'text-light' : ''}`}>ערוך
-                            מתכון</div>
+                            <div onClick={() => setCategory('editRecipe')} data-toggle="collapse"
+                                 data-target="#collapseCategories"
+                                 className={`py-1 ${category === 'editRecipe' ? 'text-light' : ''}`}>ערוך
+                                מתכון
+                            </div>
 
-                        <div onClick={() => setCategory('comments')} data-toggle="collapse"
-                             data-target="#collapseCategories"
-                             className={`py-1 ${category === 'comments' ? 'text-light' : ''}`}>תגובות לאישור</div>
+                            <div onClick={() => setCategory('recipesIngredients')} data-toggle="collapse"
+                                 data-target="#collapseCategories"
+                                 className={`py-1 ${category === 'recipesIngredients' ? 'text-light' : ''}`}>מוצרים למתכונים
+                            </div>
+
+                            <div onClick={() => setCategory('comments')} data-toggle="collapse"
+                                 data-target="#collapseCategories"
+                                 className={`py-1 ${category === 'comments' ? 'text-light' : ''}`}>תגובות לאישור
+                            </div>
                         </div>}
-                        
+
                     </div>
                 </div>
             </div>
@@ -139,6 +170,8 @@ const Profile = ({auth, profile, signOut, history}) => {
                     {category === 'addRecipe' && <AddRecipe/>}
                     {category === 'editRecipe' && <EditRecipe/>}
                     {category === 'comments' && <CommentsToApprove/>}
+                    {category === 'recipesIngredients' && <RecipesIngredients/>}
+                    {category === 'editItem' && <EditItem/>}
                 </div>}
             </div>
         </div>

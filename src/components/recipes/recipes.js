@@ -5,16 +5,24 @@ import './recipes.scss';
 import RecipesItems from './recipesItems';
 
 
-const Recipes = ({match, history, category, setCategory}) => {
-    const [searchField, setSearchField] = useState('');
+const Recipes = ({match, history, category, setCategory, searchField, setSearchField}) => {
     const [searchBy, setSearchBy] = useState('recipe');
-    const [searchByName, setSearchByName] = useState('חפש לפי שם המתכון');
+    const [searchByName, setSearchByName] = useState('חפש לפי מתכון');
+    const [recipeNames, setRecipeNames] = useState([]);
+    const [picked, setPicked] = useState(false);
 
     const handleCategoryClick = (category) => {
+        setSearchField('');
         setCategory(category);
         if (!match.isExact) {
             history.push('/recipes');
         }
+    };
+
+    const handleRecipePick = (recipePickName) => {
+        setSearchField(recipePickName);
+        setPicked(true);
+        setCategory('all');
     };
 
     return(
@@ -22,14 +30,12 @@ const Recipes = ({match, history, category, setCategory}) => {
             <Helmet>
                 <title>הולי ויגן - מתכונים טבעוניים</title>
                 <meta name="description" content="מגוון מתכונים טבעוניים וללא גלוטן" />
-                <meta name="keywords" content="מתכונים טבעוניים, הולי ויגן, סופר טבעוני, מצרכים טבעוניים, טבעונות, טבעוני, מתכונים, סופרמרקט טבעוני, חנות טבעונית, מתכונים ללא גלוטן"/>
-                {/*<meta name="og:title" property="og:title" content="מגוון מתכונים טבעוניים וללא גלוטן"/>*/}
-                {/*<meta name="twitter:card" content="מגוון מתכונים טבעוניים וללא גלוטן"/>*/}
             </Helmet>
             <div className="col-lg-2 choose-items d-none d-lg-inline border-right shadow-sm m-0 p-0">
                 <div className="categories-lg mt-3 text-dark">
                     <div onClick={() => handleCategoryClick('all')} className={`${category === 'all' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>כל המתכונים</div>
-                    <div onClick={() => handleCategoryClick('salad')} className={`${category === 'salad' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>סלטים</div>
+                    <div onClick={() => handleCategoryClick('burger')} className={`${category === 'burger' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>המבורגר וקציצות</div>
+                    <div onClick={() => handleCategoryClick('salad')} className={`${category === 'salad' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>ירקות וסלטים</div>
                     <div onClick={() => handleCategoryClick('pasta')} className={`${category === 'pasta' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>נודלס ופסטות</div>
                     <div onClick={() => handleCategoryClick('bakery')} className={`${category === 'bakery' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>לחם ומאפים</div>
                     <div onClick={() => handleCategoryClick('soup')} className={`${category === 'soup' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>מרקים</div>
@@ -47,8 +53,14 @@ const Recipes = ({match, history, category, setCategory}) => {
             <Route exact path={["/", "/recipes"]} render={() => <div className="col d-lg-none">
                 <div className="input-group bg-light pt-3 searchBar-sm">
                     <input style={{'outline': 'none'}} type="text" className="form-control"
-                           placeholder={`${searchBy === 'recipe' ? 'חפש מתכון..' : 'חפש מרכיב..'}`}
-                           value={searchField} onChange={(e) => setSearchField(e.target.value)}/>
+                           placeholder={`${searchBy === 'recipe' ? 'הזן את שם המתכון..' : 'הזן את שם המרכיב..'}`}
+                           value={searchField} onChange={(e) => {
+                                setSearchField(e.target.value);
+                                if (picked) {
+                                    setPicked(false);
+                                }
+                           }}
+                    />
                     <div className="input-group-append dropdown">
                         <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,19 +68,31 @@ const Recipes = ({match, history, category, setCategory}) => {
                         </button>
                         <div className="dropdown-menu my-0 py-0" aria-labelledby="dropdownMenuButton">
                             <div onClick={() => {
-                                setSearchByName('חפש לפי שם המתכון');
+                                setSearchByName('חפש לפי מתכון');
                                 setSearchBy('recipe');
-                            }} data-toggle="collapse" data-target="#collapseCategories" className={`py-2 border-bottom dropdown-item`} style={{'cursor': 'pointer'}}>חפש לפי שם המתכון</div>
+                            }} data-toggle="collapse" data-target="#collapseCategories" className={`py-2 border-bottom dropdown-item`} style={{'cursor': 'pointer'}}>חפש לפי מתכון</div>
                             <div onClick={() => {
-                                setSearchByName('חפש לפי שם המרכיב');
+                                setSearchByName('חפש לפי מרכיב');
                                 setSearchBy('ingredient');
-                            }} data-toggle="collapse" data-target="#collapseCategories" className={`py-2 dropdown-item`} style={{'cursor': 'pointer'}}>חפש לפי שם המרכיב</div>
+                            }} data-toggle="collapse" data-target="#collapseCategories" className={`py-2 dropdown-item`} style={{'cursor': 'pointer'}}>חפש לפי מרכיב</div>
                         </div>
                     </div>
                 </div>
+                {(searchBy === 'recipe') && <ul className={`list-group search-list-my-group ${((searchField) && (searchField.replace(/\s/g,"") !== "") && (!picked)) ? '' : 'd-none'}`}>
+                    {recipeNames.map((name, i) => {
+                        if (!name.includes(searchField)) {
+                            return null;
+                        } else {
+                            return (
+                                <li onClick={() => handleRecipePick(name)} key={i}
+                                    className="list-group-item py-2">{name}</li>
+                            )
+                        }
+                    })}
+                </ul>}
             </div>}/>
 
-            <RecipesItems searchBy={searchBy} setSearchBy={setSearchBy} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>
+            <RecipesItems recipeNames={recipeNames} handleRecipePick={handleRecipePick} setRecipeNames={setRecipeNames} picked={picked} setPicked={setPicked} searchBy={searchBy} setSearchBy={setSearchBy} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>
         </div>
     );
 };

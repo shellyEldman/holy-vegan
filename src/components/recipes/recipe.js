@@ -5,14 +5,16 @@ import {firestoreConnect} from "react-redux-firebase";
 import {connect} from "react-redux";
 import {compose} from "redux";
 import {Link} from "react-router-dom";
+import {Button, Modal} from "react-bootstrap";
 import firebase from "../../config/fbConfig";
+import {addItemsToCart} from '../../store/actions/shopActions';
 import * as moment from 'moment';
 import 'moment/locale/he';
 
 const storage = firebase.storage();
 const db = firebase.firestore();
 
-const Recipe = ({recipe, shop, match}) => {
+const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
     const [userName, setUserName] = useState('');
     const [comment, setComment] = useState('');
     const [image, setImage] = useState(null);
@@ -21,13 +23,30 @@ const Recipe = ({recipe, shop, match}) => {
     const [loading, setLoading] = useState(false);
     const [commentAdded, setCommentAdded] = useState(false);
     const [scrolled, setScrolled] = useState(false);
+    const [buyRecipeIngredients, setBuyRecipeIngredients] = useState([]);
+    const [show, setShow] = useState(false);
+    const [showAddToCartModal, setShowAddToCartModal] = useState(false);
+    const [modalItem, setModalItem] = useState(null);
+    const [replaceItem, setReplaceItem] = useState(null);
+
+    const myElement = document.getElementById('scrollDiv');   /* col-lg-10 */
+
+    const handleClose = () => setShow(false);
+    const handleCloseAddToCart = () => setShowAddToCartModal(false);
+    const handleShow = () => setShow(true);
+    const handleShowAddToCart = () => setShowAddToCartModal(true);
 
     useEffect(() => {
-        if (!scrolled) {
+        if (myElement && !scrolled) {
+            myElement.scrollTo(0, 0);
             window.scrollTo(0, 0);
             setScrolled(true);
         }
         if (recipe) {
+            if (recipe.buyRecipeIngredients) {
+                setBuyRecipeIngredients(recipe.buyRecipeIngredients);
+            }
+
             try {
                 const id = match.params.id;
                 const haveSeen = localStorage.getItem(id);
@@ -41,10 +60,10 @@ const Recipe = ({recipe, shop, match}) => {
                     }
                     const updateRecipe = {...recipe, views};
                     db.collection("recipes").doc(id).set(updateRecipe)
-                        .then(function() {
+                        .then(function () {
                             console.log("Document successfully written!");
                         })
-                        .catch(function(error) {
+                        .catch(function (error) {
                             console.error("Error writing document: ", error);
                         });
                 }
@@ -52,7 +71,24 @@ const Recipe = ({recipe, shop, match}) => {
                 console.log('e', e);
             }
         }
-    }, [recipe, scrolled, match.params.id]);
+    }, [recipe, scrolled, match.params.id, myElement]);
+
+    const handleReplaceItem = () => {
+        let newBuyIngredients = [...buyRecipeIngredients];
+        newBuyIngredients = newBuyIngredients.map(ing => {
+            if (modalItem.id === ing.id) {
+                return {
+                    ...ing,
+                    id: replaceItem
+                };
+            } else {
+                return ing;
+            }
+        });
+        setBuyRecipeIngredients(newBuyIngredients);
+        setReplaceItem(null);
+        setShow(false);
+    };
 
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
@@ -73,7 +109,6 @@ const Recipe = ({recipe, shop, match}) => {
             }
         }
     };
-
 
     const handleSaveComment = () => {
         if (!comment || !userName) {
@@ -143,6 +178,59 @@ const Recipe = ({recipe, shop, match}) => {
         }
     };
 
+    const handleRemoveIngredient = (id) => {
+        let newIng = [...buyRecipeIngredients];
+        newIng = newIng.filter(ing => ing.id !== id);
+        setBuyRecipeIngredients(newIng);
+    };
+
+    const handleMinus = (id, range) => {
+        let newIng = [...buyRecipeIngredients];
+        newIng = newIng.map((ing => {
+            if (ing.id === id && ing.numOfItems > range) {
+                const newItem = {...ing, numOfItems: ing.numOfItems - range};
+                return newItem;
+            } else {
+                return ing;
+            }
+        }));
+        setBuyRecipeIngredients(newIng);
+    };
+
+    const handlePlus = (id, range) => {
+        let newIng = [...buyRecipeIngredients];
+        newIng = newIng.map((ing => {
+            if (ing.id === id && ing.numOfItems < 15) {
+                const newItem = {...ing, numOfItems: ing.numOfItems + range};
+                return newItem;
+            } else {
+                return ing;
+            }
+        }));
+        setBuyRecipeIngredients(newIng);
+    };
+
+    const finalPrice = () => {
+        let price = 0;
+        buyRecipeIngredients.forEach(ing => {
+            const id = ing.id;
+            const num = ing.numOfItems;
+            const itemPrice = items[id].price;
+            price += itemPrice * num;
+        });
+        return price;
+    };
+
+    const showModal = (item) => {
+        setModalItem(item);
+        handleShow();
+    };
+
+    const handleAddItemsToCart = () => {
+        handleShowAddToCart();
+        addToCart(buyRecipeIngredients, finalPrice());
+    };
+
     if (!recipe) {
         return null;
     }
@@ -153,9 +241,6 @@ const Recipe = ({recipe, shop, match}) => {
                 <meta charSet="utf-8"/>
                 <title>{recipe.recipeName} מתכון טבעוני</title>
                 <meta name="description" content={recipe.introduction}/>
-                <meta name="keywords" content={recipe.recipeName}/>
-                {/*<meta name="og:title" property="og:title" content={`${recipe.recipeName} מתכון טבעוני`}/>*/}
-                {/*<meta name="twitter:card" content={`${recipe.recipeName} מתכון טבעוני`}/>*/}
             </Helmet>
             <div className="container">
                 <div className="row">
@@ -218,10 +303,6 @@ const Recipe = ({recipe, shop, match}) => {
                             })}
                         </ul>
 
-                        {shop.canBuy &&
-                        <button className="btn btn-success btn-block mt-3"><span>רכישת מוצרים עבור מתכון זה</span><i
-                            className="fas fa-arrow-left ml-2"/></button>}
-
                         <h4 className="font-weight-bolder mt-4">הוראות הכנה</h4>
                         <ul className="list-group list-group-flush border-none">
                             {recipe.instructions.map((item, i) => {
@@ -244,80 +325,193 @@ const Recipe = ({recipe, shop, match}) => {
                             protocol=''
                             injectScript
                         />}
-
-                        {shop.canBuy &&
-                        <button className="btn btn-success btn-block mt-4"><span>רכישת מוצרים עבור מתכון זה</span><i
-                            className="fas fa-arrow-left ml-2"/></button>}
-
-                        {/*    <h4 className="mt-5 font-weight-bolder mb-3">רכישת מוצרים עבור המתכון</h4>*/}
-                        {/*    <ul className="list-group mb-3">*/}
-                        {/*        <li className="list-group-item d-flex align-items-center justify-content-between">*/}
-                        {/*            <img src="http://cafe.mouse.co.il/media/t/343/306/1/file_0.jpg" alt="polenta"*/}
-                        {/*                 className="img-fluid img-item-cart"/>*/}
-                        {/*            <div className="">*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder">טופו אמיתי</p>*/}
-                        {/*                <small className="m-0 p-0">300 גרם | כפרי בריא</small>*/}
-                        {/*            </div>*/}
-                        {/*            <div>*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder"><span className="mr-1">6.70</span>*/}
-                        {/*                    <small>ש"ח</small>*/}
-                        {/*                </p>*/}
-                        {/*                <small className="m-0 p-0 text-danger">הסר פריט</small>*/}
-                        {/*            </div>*/}
-
-                        {/*        </li>*/}
-                        {/*        <li className="list-group-item d-flex align-items-center justify-content-between">*/}
-                        {/*            <img src="http://cafe.mouse.co.il/media/t/343/306/1/file_0.jpg" alt="polenta"*/}
-                        {/*                 className="img-fluid img-item-cart"/>*/}
-                        {/*            <div className="">*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder">טופו אמיתי</p>*/}
-                        {/*                <small className="m-0 p-0">300 גרם | כפרי בריא</small>*/}
-                        {/*            </div>*/}
-                        {/*            <div>*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder"><span className="mr-1">6.70</span>*/}
-                        {/*                    <small>ש"ח</small>*/}
-                        {/*                </p>*/}
-                        {/*                <small className="m-0 p-0 text-danger">הסר פריט</small>*/}
-                        {/*            </div>*/}
-
-                        {/*        </li>*/}
-                        {/*        <li className="list-group-item d-flex align-items-center justify-content-between">*/}
-                        {/*            <img src="http://cafe.mouse.co.il/media/t/343/306/1/file_0.jpg" alt="polenta"*/}
-                        {/*                 className="img-fluid img-item-cart"/>*/}
-                        {/*            <div className="">*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder">טופו אמיתי</p>*/}
-                        {/*                <small className="m-0 p-0">300 גרם | כפרי בריא</small>*/}
-                        {/*            </div>*/}
-                        {/*            <div>*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder"><span className="mr-1">6.70</span>*/}
-                        {/*                    <small>ש"ח</small>*/}
-                        {/*                </p>*/}
-                        {/*                <small className="m-0 p-0 text-danger">הסר פריט</small>*/}
-                        {/*            </div>*/}
-
-                        {/*        </li>*/}
-                        {/*        <li className="list-group-item d-flex align-items-center justify-content-between">*/}
-                        {/*            <img src="http://cafe.mouse.co.il/media/t/343/306/1/file_0.jpg" alt="polenta"*/}
-                        {/*                 className="img-fluid img-item-cart"/>*/}
-                        {/*            <div className="">*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder">טופו אמיתי</p>*/}
-                        {/*                <small className="m-0 p-0">300 גרם | כפרי בריא</small>*/}
-                        {/*            </div>*/}
-                        {/*            <div>*/}
-                        {/*                <p className="m-0 p-0 font-weight-bolder"><span className="mr-1">6.70</span>*/}
-                        {/*                    <small>ש"ח</small>*/}
-                        {/*                </p>*/}
-                        {/*                <small className="m-0 p-0 text-danger">הסר פריט</small>*/}
-                        {/*            </div>*/}
-                        {/*        </li>*/}
-                        {/*    </ul>*/}
-
-                        {/*    <button className="btn btn-success float-right rounded-pill px-3 py-1"><span>הוספה לסל</span><i*/}
-                        {/*        className="fas fa-cart-plus ml-2"/></button>*/}
-                        {/*    <p className="font-weight-bolder mb-1">סה"כ: 273.80 ש"ח</p>*/}
                     </div>
 
-                    <div className="col comments mt-5 mb-5">
+                    {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && items && buyRecipeIngredients && buyRecipeIngredients.length > 0 &&
+                    <div className="col-12 recipe-items-buy mt-5">
+                        <h3 className="font-weight-bolder mb-3">רכישת מצרכים עבור המתכון</h3>
+
+                        {modalItem && <Modal dir="rtl" show={show} onHide={handleClose}>
+                            <Modal.Body dir="rtl">
+                                <React.Fragment>
+                                    <button onClick={handleClose} style={{"outline": "none"}} type="button"
+                                            className="close float-right" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <div className="card shadow-sm mb-3 modalItem m-auto" style={{'width': '227px'}}>
+                                        <img src={modalItem.imgUrl} className="card-img-top modalImg mt-2"
+                                             alt={modalItem.name}/>
+                                        <div className="card-body pt-2">
+                                            <p className="card-title text-center font-weight-bold my-1">
+                                                <span>{modalItem.price.toFixed(2)}</span> ש"ח</p>
+                                            <p className="card-text font-weight-bolder my-1">{modalItem.name}</p>
+                                            {!modalItem.brand &&
+                                            <p className="card-text my-1">{modalItem.price.toFixed(2)} ₪
+                                                ל- {modalItem.amount} {modalItem.unit}</p>}
+                                            {modalItem.brand &&
+                                            <p className="card-text my-1"><span>{modalItem.amount}</span>
+                                                <span>{modalItem.unit}</span> | <span>{modalItem.brand}</span></p>}
+                                            <p className="card-text my-1">
+                                                <small className="text-muted"><span>{modalItem.profitability}</span>
+                                                </small>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <h4 className="mt-3 mb-0">מוצרים חלופיים</h4>
+                                    <hr className="my-1"/>
+                                    <div className="row">
+                                        {modalItem.relatedItems && modalItem.relatedItems.map(itemId => {
+                                            const item = items[itemId];
+                                            return (
+                                                <div key={itemId} className="col-lg-6 my-3">
+                                                    <div className="card shadow-sm modalItem m-auto"
+                                                         style={{'width': '197px'}}>
+                                                        <img src={item.imgUrl}
+                                                             className="card-img-top relatedItems modalImg mt-2"
+                                                             alt={item.name}/>
+                                                        <div className="card-body pt-2">
+                                                            <p className="card-title text-center font-weight-bold my-1">
+                                                                <span>{item.price.toFixed(2)}</span> ש"ח</p>
+                                                            <p className="card-text font-weight-bolder my-1">{item.name}</p>
+                                                            {!item.brand &&
+                                                            <p className="card-text my-1">{item.price.toFixed(2)} ₪
+                                                                ל- {item.amount} {item.unit}</p>}
+                                                            {item.brand &&
+                                                            <p className="card-text my-1"><span>{item.amount}</span>
+                                                                <span>{item.unit}</span> | <span>{item.brand}</span>
+                                                            </p>}
+                                                            <p className="card-text my-1">
+                                                                <small className="text-muted">
+                                                                    <span>{item.profitability}</span></small>
+                                                            </p>
+                                                            {replaceItem === itemId ?
+                                                                <button
+                                                                    className="btn btn-sm btn-success btn-block">מוצר
+                                                                    הוחלף</button>
+                                                                :
+                                                                <button onClick={() => setReplaceItem(itemId)}
+                                                                        className="btn btn-sm btn-secondary btn-block">החלף
+                                                                    במוצר זה</button>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                    {(!modalItem.relatedItems || modalItem.relatedItems.length === 0) &&
+                                    <p className="my-2">אין מוצרים חלופיים..</p>}
+                                </React.Fragment>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    סגור
+                                </Button>
+                                {(modalItem.relatedItems && modalItem.relatedItems.length > 0) &&
+                                <Button variant="success" onClick={handleReplaceItem}>
+                                    שמור שינויים
+                                </Button>}
+                            </Modal.Footer>
+                        </Modal>}
+
+
+                        <div className="card">
+                            <ul className="list-group list-group-flush">
+                                {buyRecipeIngredients.map(ing => {
+                                    const item = {...items[ing.id], id: ing.id};
+                                    return (
+                                        <li key={ing.id} className="list-group-item">
+                                            <div className="row">
+                                                <div
+                                                    className="col-4 col-lg-2 d-flex justify-content-center align-items-center">
+                                                    <img onClick={() => showModal(item)} className="view-more"
+                                                         src={item.imgUrl} alt="uu"/>
+                                                </div>
+                                                <div className="col-8 col-lg-10">
+                                                    <p onClick={() => handleRemoveIngredient(ing.id)}
+                                                       className="float-right pl-2 m-0 text-danger remove-item d-flex align-items-center">
+                                                        <span style={{'fontSize': '14px'}}>הסר</span><i
+                                                        className="far fa-times-circle ml-1"/></p>
+                                                    <p onClick={() => showModal(item)}
+                                                       className="py-1 m-0 view-more"><span
+                                                        className="font-weight-bolder">{item.name}</span>
+                                                    </p>
+                                                    {item.brand && <p onClick={() => showModal(item)}
+                                                                      className="py-1 m-0 view-more">{item.amount} {item.unit} | {item.brand}
+                                                    </p>}
+                                                    {!item.brand && <p onClick={() => showModal(item)}
+                                                                       className="py-1 m-0 view-more">{item.price.toFixed(2)} ₪
+                                                        ל- {item.amount} {item.unit}
+                                                    </p>}
+                                                    <div className="btn-group mr-2 py-1" role="group"
+                                                         aria-label="Basic example">
+                                                        <button onClick={() => handleMinus(ing.id, item.range)}
+                                                                type="button"
+                                                                className="btn btn-sm btn-secondary btn-right">-
+                                                        </button>
+                                                        <button
+                                                            className="btn btn-sm border-secondary middle">{ing.numOfItems}</button>
+                                                        <button onClick={() => handlePlus(ing.id, item.range)}
+                                                                type="button"
+                                                                className="btn btn-sm btn-secondary btn-left">+
+                                                        </button>
+                                                    </div>
+                                                    <small>{item.rangeUnit}</small>
+                                                    <p onClick={() => showModal(item)}
+                                                       className="py-1 m-0 view-more"><span><i
+                                                        className="far fa-eye mr-1"/></span><span>ראה/י עוד</span></p>
+                                                    <p className="float-right py-1 m-0"><span>מחיר:</span><span
+                                                        className="font-weight-bolder ml-1">{(item.price * ing.numOfItems).toFixed(2)} ₪</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    )
+                                })}
+                                <li className="list-group-item d-flex flex-column pb-3">
+                                    <p className="align-self-end py-1 mt-0 mb-1"><span>סה"כ לתשלום:</span><span
+                                        className="font-weight-bolder ml-1">{finalPrice().toFixed(2)} ₪</span></p>
+                                    <button onClick={handleAddItemsToCart}
+                                            className="btn btn-success btn-block mt-1 align-self-end"><span>הוספת מוצרים לעגלה</span><i
+                                        className="fas fa-cart-plus ml-2"/></button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>}
+
+                    <Modal dir="rtl" className="modalAddToCart" show={showAddToCartModal} onHide={handleCloseAddToCart}>
+                        <Modal.Header dir="rtl">
+                            <Modal.Title>
+                                המוצרים נוספו בהצלחה לעגלה!
+                            </Modal.Title>
+                            <button onClick={handleCloseAddToCart} style={{"outline": "none"}} type="button"
+                                    className="close float-right" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </Modal.Header>
+                        <Modal.Body dir="rtl">
+                            <div className="col-12 d-flex flex-column align-items-center">
+                                <button onClick={() => history.push('/cart')}
+                                        className="btn btn-outline-success btn-empty"><span>מעבר לקופה</span><i
+                                    className="fas fa-angle-left mx-2"/></button>
+                                <p className="my-3">או</p>
+                                <button onClick={() => history.push('/shop')}
+                                        className="btn btn-outline-success d-block btn-empty"><span>חיפוש מוצרים נוספים</span><i
+                                    className="fas fa-angle-left mx-2"/></button>
+                                <p className="my-3">או</p>
+                                <button onClick={() => history.push('/recipes')}
+                                        className="btn btn-outline-success d-block btn-empty"><span>חיפוש מתכונים נוספים</span><i
+                                    className="fas fa-angle-left mx-2"/></button>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleCloseAddToCart}>
+                                סגור
+                            </Button>
+                        </Modal.Footer>
+                    </Modal>
+
+                    <div className="col-12 comments mt-5 mb-5">
                         <div className="border-bottom border-dark pb-3 mb-0 d-flex justify-content-between">
                             <h4 className="font-weight-bolder mb-2">תגובות
                                 ({recipe.comments ? recipe.comments.length : 0})</h4>
@@ -405,14 +599,22 @@ const mapStateToProps = (state, ownProps) => {
     const recipe = recipes ? recipes[id] : null;
     return {
         recipe,
-        shop: state.shop
+        shop: state.shop,
+        auth: state.firebase.auth,
+        items: state.firestore.data.items
     };
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addToCart: (items, sum) => dispatch(addItemsToCart(items, sum))
+    };
+};
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect([
-        {collection: 'recipes'}
+        {collection: 'recipes'},
+        {collection: 'items'}
     ])
 )(Recipe);

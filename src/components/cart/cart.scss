@@ -1,0 +1,38 @@
+.cart.row {
+  // Large devices (desktops, 992px and up)
+  @media (min-width: 992px) {
+    flex-grow: 1;
+  }
+
+  .col-lg-8 {
+    height: 100%;
+    overflow-y: scroll;
+  }
+
+  .fa-shopping-cart {
+    font-size: 20px;
+  }
+
+  .fa-angle-left {
+    font-size: 15px;
+  }
+
+  .remove-item {
+    font-size: 17px;
+    cursor: pointer;
+  }
+
+  .btn-group .middle {
+    width: 2.8em;
+  }
+
+  img {
+    height: 107px;
+    object-fit: cover;
+    max-width: 100%;
+  }
+
+  .btn-empty {
+    width: 200px;
+  }
+}

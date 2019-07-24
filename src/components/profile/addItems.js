@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import firebase from '../../config/fbConfig';
-import { withRouter } from 'react-router-dom';
+import {withRouter} from 'react-router-dom';
+import AddItemsFinal from './addItemsFinal';
 
 const storage = firebase.storage();
 const db = firebase.firestore();
@@ -15,12 +16,16 @@ const AddItems = ({history}) => {
     const [profitability, setProfitability] = useState('');
     const [order, setOrder] = useState(1);
     const [categories, setCategories] = useState([]);
+    const [relatedItems, setRelatedItems] = useState([]);
+    const [range, setRange] = useState(1);
+    const [rangeUnit, setRangeUnit] = useState('');
 
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [addRelatedItems, setAddRelatedItems] = useState(false);
 
     const handleFileChange = (e) => {
-        if(e.target.files[0]) {
+        if (e.target.files[0]) {
             setImage(e.target.files[0]);
         }
     };
@@ -63,14 +68,17 @@ const AddItems = ({history}) => {
                     brand,
                     profitability,
                     order,
-                    categories
+                    categories,
+                    relatedItems,
+                    range,
+                    rangeUnit
                 })
-                    .then(function() {
+                    .then(function () {
                         console.log("Document successfully written!");
                         history.push('/');
                         setLoading(false);
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error("Error writing document: ", error);
                     });
             });
@@ -93,7 +101,7 @@ const AddItems = ({history}) => {
     };
 
     const handleSave = () => {
-        if (itemName && image && imgUrl && amount && unit && price && brand && profitability && order && categories) {
+        if (itemName && image && imgUrl && amount && unit && price && profitability && order && categories) {
             setLoading(true);
             db.collection("items").add({
                 name: itemName,
@@ -104,13 +112,16 @@ const AddItems = ({history}) => {
                 brand,
                 profitability,
                 order,
-                categories
+                categories,
+                relatedItems,
+                range,
+                rangeUnit
             })
-                .then(function(docRef) {
+                .then(function (docRef) {
                     console.log("Document successfully written!", docRef.id);
                     saveImageWithTrueId(docRef.id)
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.error("Error writing document: ", error);
                 });
         } else {
@@ -123,38 +134,55 @@ const AddItems = ({history}) => {
             <div className="col-lg-4 addItems">
                 <div className="container">
                     <h5>הוספת מוצר</h5>
-                        <div className="custom-file my-3">
-                            <input onChange={handleFileChange} type="file" className="custom-file-input" id="customFile"/>
-                            <label className="custom-file-label" htmlFor="customFile">בחירת תמונה</label>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="name">שם מוצר</label>
-                            <input value={itemName} onChange={(e) => setItemName(e.target.value)} type="text" className="form-control" id="name"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="amount">כמות</label>
-                            <input value={amount} onChange={(e) => setAmount(Number(e.target.value))} type="number" className="form-control" id="amount"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="brand">מותג</label>
-                            <input value={brand} onChange={(e) => setBrand(e.target.value)} type="text" className="form-control" id="brand"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="price">מחיר</label>
-                            <input value={price} onChange={(e) => setPrice(Number(e.target.value))} type="number" className="form-control" id="price"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="unit">יחידה</label>
-                            <input value={unit} onChange={(e) => setUnit(e.target.value)} type="text" className="form-control" id="unit"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="profitability">כדאיות</label>
-                            <input value={profitability} onChange={(e) => setProfitability(e.target.value)} type="text" className="form-control" id="profitability"/>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="order">סדר</label>
-                            <input value={order} onChange={(e) => setOrder(Number(e.target.value))} type="number" className="form-control" id="order"/>
-                        </div>
+                    <div className="custom-file my-3">
+                        <input onChange={handleFileChange} type="file" className="custom-file-input" id="customFile"/>
+                        <label className="custom-file-label" htmlFor="customFile">בחירת תמונה</label>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="name">שם מוצר</label>
+                        <input value={itemName} onChange={(e) => setItemName(e.target.value)} type="text"
+                               className="form-control" id="name"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="amount">כמות</label>
+                        <input value={amount} onChange={(e) => setAmount(Number(e.target.value))} type="number"
+                               className="form-control" id="amount"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="brand">מותג</label>
+                        <input value={brand} onChange={(e) => setBrand(e.target.value)} type="text"
+                               className="form-control" id="brand"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="price">מחיר</label>
+                        <input value={price} onChange={(e) => setPrice(Number(e.target.value))} type="number"
+                               className="form-control" id="price"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="unit">יחידה</label>
+                        <input value={unit} onChange={(e) => setUnit(e.target.value)} type="text"
+                               className="form-control" id="unit"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="profitability">כדאיות</label>
+                        <input value={profitability} onChange={(e) => setProfitability(e.target.value)} type="text"
+                               className="form-control" id="profitability"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="order">סדר</label>
+                        <input value={order} onChange={(e) => setOrder(Number(e.target.value))} type="number"
+                               className="form-control" id="order"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="range">קפיצות של</label>
+                        <input value={range} onChange={(e) => setRange(Number(e.target.value))} type="number"
+                               className="form-control" id="range"/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="rangeUnit">מידות של קפיצה</label>
+                        <input value={rangeUnit} onChange={(e) => setRangeUnit(e.target.value)} type="text"
+                               className="form-control" id="rangeUnit"/>
+                    </div>
                 </div>
             </div>
 
@@ -274,7 +302,8 @@ const AddItems = ({history}) => {
                     <div className="card-body pt-2">
                         <p className="card-title text-center font-weight-bold my-1"><span>{price}</span> ש"ח</p>
                         <p className="card-text font-weight-bolder my-1">{itemName}</p>
-                        <p className="card-text my-1"><span>{amount}</span> <span>{unit}</span> | <span>{brand}</span></p>
+                        <p className="card-text my-1"><span>{amount}</span> <span>{unit}</span> | <span>{brand}</span>
+                        </p>
                         <p className="card-text my-1">
                             <small className="text-muted"><span>{profitability}</span></small>
                         </p>
@@ -289,14 +318,19 @@ const AddItems = ({history}) => {
                         </button>
                     </div>
                 </div>
-
-                <button onClick={handleSave} className="btn btn-success btn-block mb-5" disabled={loading}>
-                    {!loading && <span>שמור</span>}
-                    {loading && <div className="spinner-border spinner-border-sm" role="status">
-                        <span className="sr-only">Loading...</span>
-                    </div>}
-                </button>
             </div>
+            <button onClick={() => setAddRelatedItems(true)} className="btn btn-warning btn-block my-3">הוסף מוצרים
+                דומים
+            </button>
+
+            {addRelatedItems && <AddItemsFinal relatedItems={relatedItems} setRelatedItems={setRelatedItems}/>}
+
+            <button onClick={handleSave} className="btn btn-success btn-block mb-5" disabled={loading}>
+                {!loading && <span>שמור</span>}
+                {loading && <div className="spinner-border spinner-border-sm" role="status">
+                    <span className="sr-only">Loading...</span>
+                </div>}
+            </button>
         </div>
     );
 };
