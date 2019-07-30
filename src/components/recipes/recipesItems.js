@@ -122,7 +122,7 @@ const RecipesItems = ({recipeNames, setRecipeNames, handleRecipePick, picked, se
 
         return (
             <div key={recipe.id} className="col-sm-6 col-md-4 col-xl-3">
-                <Link to={`/recipes/id/${recipe.id}`} style={{textDecoration: 'none'}} className="subnav_add">
+                <Link to={`/recipes/${recipe.id}`} style={{textDecoration: 'none'}} className="subnav_add">
                     <div className="card recipe-main-card shadow-sm mb-3 text-dark">
                         <img src={recipe.imgUrl} className="card-img-top" alt={recipe.recipeName}/>
                         <div className="card-body">

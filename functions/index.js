@@ -1,8 +1,33 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const fs = require('fs');
 
 admin.initializeApp();
 const db = admin.firestore();
+
+
+
+exports.writedata = functions.https.onRequest((req, res) => {
+    const recipes = [];
+    db.collection("recipes").get()
+        .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+                recipes.push(doc.data());
+            });
+            fs.writeFile("/tmp/recipeData.txt", JSON.stringify(recipes), function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+
+                console.log("The file was saved!");
+            });
+            return res.send(recipes);
+        })
+        .catch(function(error) {
+            console.log("Error getting documents: ", error);
+            return res.send(recipes);
+        });
+});
 
 const buildRecipe = (recipe, recipeId) => {
     return '<!DOCTYPE html><head>' +
@@ -14,7 +39,7 @@ const buildRecipe = (recipe, recipeId) => {
             'gtag(\'js\', new Date());' +
             'gtag(\'config\', \'UA-143770729-1\');' +
         '</script>' +
-        '<link rel="canonical" href="https://holy-vegan.web.app/recipes/id/' + recipeId.toString() + '"/>' +
+        '<link rel="canonical" href="https://holy-vegan.co.il/recipes/' + recipeId.toString() + '"/>' +
         '<title>' + recipe.recipeName + ' מתכון טבעוני | הולי ויגן</title>' +
         '<meta name="title" content="' + recipe.recipeName + ' מתכון טבעוני | הולי ויגן">' +
         '<meta name="description" content="' + recipe.introduction + '"/>' +
@@ -25,14 +50,14 @@ const buildRecipe = (recipe, recipeId) => {
         '</style>' +
         //     <!-- Open Graph / Facebook -->
         '<meta property="og:type" content="website">' +
-        '<meta property="og:url" content="https://holy-vegan.web.app/recipes/id/' + recipeId.toString() + '">' +
+        '<meta property="og:url" content="https://holy-vegan.co.il/recipes/' + recipeId.toString() + '">' +
         '<meta property="og:title" content="' + recipe.recipeName + ' מתכון טבעוני | הולי ויגן">' +
         '<meta property="og:description" content="' + recipe.introduction + '"/>' +
         '<meta property="og:image" content="' + recipe.imgUrl + '"/>' +
         '<meta property="og:site_name" content="הולי ויגן">' +
         //     <!-- Twitter -->
         '<meta property="twitter:card" content="summary_large_image">' +
-        '<meta property="twitter:url" content="https://holy-vegan.web.app/recipes/id/' + recipeId.toString() + '">' +
+        '<meta property="twitter:url" content="https://holy-vegan.co.il/recipes/id/' + recipeId.toString() + '">' +
         '<meta property="twitter:title" content="' + recipe.recipeName + ' מתכון טבעוני | הולי ויגן">' +
         '<meta property="twitter:description" content="' + recipe.introduction + '"/>' +
         '<meta property="twitter:image" content="' + recipe.imgUrl + '"/>' +
@@ -43,10 +68,9 @@ const buildRecipe = (recipe, recipeId) => {
         '<h2 class="op">מתכון טבעוני</h2>' +
         '<h1 class="op">הולי ויגן</h1>' +
         '<p class="op">' + recipe.introduction + '</p>' +
-        '<script>window.location.assign("https://holy-vegan.web.app/recipes/' + recipeId.toString() + '");</script>' +
+        '<script>window.location.assign("https://holy-vegan.co.il/recipes/' + recipeId.toString() + '");</script>' +
         '</body></html>';
 };
-
 
 exports.recipe = functions.https.onRequest((req, res) => {
     const path = req.path.split('/');

@@ -1,4 +1,10 @@
 .navbar {
+
+  @media (max-width: 991.98px) {
+    max-height: 100vh;
+    overflow-y: scroll;
+  }
+
   z-index: 1500;
 
   .nav-link {

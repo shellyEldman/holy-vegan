@@ -2,6 +2,9 @@ export const addItemsToCart = (items, totalSum) => {
     return (dispatch, getState) => {
         let cartItems = [...getState().shop.cartItems];
         const cartSum = getState().shop.cartSum += totalSum;
+        console.log('items', items, totalSum);
+        console.log('cart', cartItems, cartSum);
+        let leftItems = [...items];
 
         if (cartItems.length > 0) {
             cartItems = cartItems.map(ing => {
@@ -13,6 +16,7 @@ export const addItemsToCart = (items, totalSum) => {
                             ...ing,
                             numOfItems
                         };
+                        leftItems = leftItems.filter(leftItem => leftItem.id !== ing.id);
                     }
                 });
                 if (itemReturn) {
@@ -21,6 +25,11 @@ export const addItemsToCart = (items, totalSum) => {
                     return {...ing};
                 }
             });
+
+            if (leftItems && leftItems.length > 0) {
+                cartItems = [...cartItems, ...leftItems];
+            }
+
         } else {
             cartItems = [...items];
         }

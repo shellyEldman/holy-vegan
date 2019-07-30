@@ -9,9 +9,26 @@
     overflow-y: scroll;
   }
 
-  .fa-shopping-cart {
-    font-size: 20px;
+  .top {
+    .fa-shopping-cart {
+      font-size: 17px;
+      // Large devices (desktops, 992px and up)
+      @media (min-width: 992px) {
+        //font-size: 20px;
+      }
+    }
+
+    p {
+      span {
+        font-size: 17px;
+        @media (min-width: 992px) {
+          font-size: 20px;
+        }
+      }
+    }
+
   }
+
 
   .fa-angle-left {
     font-size: 15px;

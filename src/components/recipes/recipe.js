@@ -425,13 +425,15 @@ const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
                                                 <div
                                                     className="col-4 col-lg-2 d-flex justify-content-center align-items-center">
                                                     <img onClick={() => showModal(item)} className="view-more"
-                                                         src={item.imgUrl} alt="uu"/>
+                                                         src={item.imgUrl} alt={item.name}/>
                                                 </div>
                                                 <div className="col-8 col-lg-10">
-                                                    <p onClick={() => handleRemoveIngredient(ing.id)}
-                                                       className="float-right pl-2 m-0 text-danger remove-item d-flex align-items-center">
-                                                        <span style={{'fontSize': '14px'}}>הסר</span><i
-                                                        className="far fa-times-circle ml-1"/></p>
+                                                    <div className="py-1 m-0">
+                                                        <p onClick={() => handleRemoveIngredient(ing.id)}
+                                                           className="float-right pl-3 text-danger remove-item d-flex align-items-center">
+                                                            <span style={{'fontSize': '14px'}}>הסר</span><i
+                                                            className="far fa-times-circle ml-1"/></p>
+                                                    </div>
                                                     <p onClick={() => showModal(item)}
                                                        className="py-1 m-0 view-more"><span
                                                         className="font-weight-bolder">{item.name}</span>
@@ -460,7 +462,7 @@ const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
                                                     <p onClick={() => showModal(item)}
                                                        className="py-1 m-0 view-more"><span><i
                                                         className="far fa-eye mr-1"/></span><span>ראה/י עוד</span></p>
-                                                    <p className="float-right py-1 m-0"><span>מחיר:</span><span
+                                                    <p className="float-right py-1 mb-0 mt-3 mt-lg-0"><span>מחיר:</span><span
                                                         className="font-weight-bolder ml-1">{(item.price * ing.numOfItems).toFixed(2)} ₪</span>
                                                     </p>
                                                 </div>
@@ -496,11 +498,13 @@ const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
                                     className="fas fa-angle-left mx-2"/></button>
                                 <p className="my-3">או</p>
                                 <button onClick={() => history.push('/shop')}
-                                        className="btn btn-outline-success d-block btn-empty"><span>חיפוש מוצרים נוספים</span><i
+                                        className="btn btn-outline-success d-block btn-empty">
+                                    <span>חיפוש מוצרים נוספים</span><i
                                     className="fas fa-angle-left mx-2"/></button>
                                 <p className="my-3">או</p>
                                 <button onClick={() => history.push('/recipes')}
-                                        className="btn btn-outline-success d-block btn-empty"><span>חיפוש מתכונים נוספים</span><i
+                                        className="btn btn-outline-success d-block btn-empty">
+                                    <span>חיפוש מתכונים נוספים</span><i
                                     className="fas fa-angle-left mx-2"/></button>
                             </div>
                         </Modal.Body>
@@ -510,6 +514,11 @@ const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
                             </Button>
                         </Modal.Footer>
                     </Modal>
+
+                    <div onClick={() => history.push('/recipes')} className="col-12 mt-3 d-lg-none float-right">
+                        <p className="goBack text-dark float-right"><span>חזרה למתכונים</span><i
+                            className="fas fa-arrow-left mx-1"/></p>
+                    </div>
 
                     <div className="col-12 comments mt-5 mb-5">
                         <div className="border-bottom border-dark pb-3 mb-0 d-flex justify-content-between">

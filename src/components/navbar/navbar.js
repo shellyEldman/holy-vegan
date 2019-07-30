@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import { withRouter } from "react-router-dom";
 import {getCartItemsAndSum} from "../../store/actions/shopActions";
 
-const Navbar = ({profile, auth, location, shop, setCategory, category, history, setSearchField, getCart}) => {
+const Navbar = ({itemCategory, setItemCategory, setItemSearchField, profile, auth, location, shop, setCategory, category, history, setSearchField, getCart}) => {
     const [pathName, setPathName] = useState('/');
 
     useEffect(() => {
@@ -21,9 +21,16 @@ const Navbar = ({profile, auth, location, shop, setCategory, category, history, 
         history.push('/recipes');
     };
 
+    const handleSelectItemCategory = (category) => {
+        setItemCategory(category);
+        history.push('/shop');
+    };
+
     const handleHomeClick = () => {
         setSearchField('');
+        setItemSearchField('');
         setCategory('all');
+        setItemCategory('all');
     };
 
     return (
@@ -39,7 +46,7 @@ const Navbar = ({profile, auth, location, shop, setCategory, category, history, 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item d-none d-lg-flex">
-                        <NavLink to="/recipes" className={`nav-link beActive ${pathName === '/recipes' ? 'text-success' : 'text-dark'}`}>מתכונים</NavLink>
+                        <NavLink onClick={handleHomeClick} to="/recipes" className={`nav-link beActive ${pathName === '/recipes' ? 'text-success' : 'text-dark'}`}>מתכונים</NavLink>
                     </li>
                     <li className="nav-item dropdown d-lg-none">
                         <span className={`nav-link dropdown-toggle ${pathName === '/recipes' ? 'text-success' : 'text-dark'}`} id="navbarDropdown" role="button"
@@ -64,31 +71,51 @@ const Navbar = ({profile, auth, location, shop, setCategory, category, history, 
                         </div>
                     </li>
                     {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <li className="nav-item d-none d-lg-flex">
-                        <NavLink to="/shop" className={`nav-link beActive ${pathName === '/shop' ? 'text-success' : 'text-dark'}`}>חנות</NavLink>
+                        <NavLink onClick={handleHomeClick} to="/shop" className={`nav-link beActive ${pathName === '/shop' ? 'text-success' : 'text-dark'}`}>חנות</NavLink>
                     </li>}
-                    {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <li className="nav-item d-lg-none" data-toggle="collapse" data-target="#navbarSupportedContent">
-                        <NavLink to="/shop" className={`nav-link beActive ${pathName === '/shop' ? 'text-success' : 'text-dark'}`}>חנות</NavLink>
-                    </li>}
+                    <li className="nav-item dropdown d-lg-none">
+                        <span className={`nav-link dropdown-toggle ${pathName === '/shop' ? 'text-success' : 'text-dark'}`} id="navbarDropdown" role="button"
+                              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            חנות
+                        </span>
+                        <div className="dropdown-menu py-0 my-0" aria-labelledby="navbarDropdown">
+                            <div onClick={() => handleSelectItemCategory('all')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`pb-1 pt-1 border-bottom dropdown-item ${itemCategory === 'all' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>כל המוצרים</div>
+                            <div onClick={() => handleSelectItemCategory('vege')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'vege' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>ירקות</div>
+                            <div onClick={() => handleSelectItemCategory('fruits')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'fruits' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>פירות</div>
+                            <div onClick={() => handleSelectItemCategory('legumes')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'legumes' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>קטניות</div>
+                            <div onClick={() => handleSelectItemCategory('spices')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'spices' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>תבלינים</div>
+                            <div onClick={() => handleSelectItemCategory('grain')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'grain' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>קמחים ודגנים</div>
+                            <div onClick={() => handleSelectItemCategory('oil')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'oil' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>שמנים ורטבים</div>
+                            <div onClick={() => handleSelectItemCategory('canned')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'canned' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>שימורים וממרחים</div>
+                            <div onClick={() => handleSelectItemCategory('granola')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'granola' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>גרנולה וקונפיטורות</div>
+                            <div onClick={() => handleSelectItemCategory('nuts')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'nuts' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>אגוזים ופיצוחים</div>
+                            <div onClick={() => handleSelectItemCategory('milk')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'milk' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>תחליפי חלב וגבינות</div>
+                            <div onClick={() => handleSelectItemCategory('east')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'east' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>מהמזרח</div>
+                            <div onClick={() => handleSelectItemCategory('organic')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'organic' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>אורגני ובריאות</div>
+                            <div onClick={() => handleSelectItemCategory('frozen')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'frozen' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>קפואים</div>
+                            <div onClick={() => handleSelectItemCategory('sweet')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`pt-1 pb-1 dropdown-item ${itemCategory === 'sweet' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>חטיפים ומתוקים</div>
+                        </div>
+                    </li>
                     {shop.canBuy && <li className="nav-item d-none d-lg-flex">
-                        <NavLink to="/about" className={`nav-link beActive ${pathName === '/about' ? 'text-success' : 'text-dark'}`}>עלינו</NavLink>
+                        <NavLink onClick={handleHomeClick} to="/about" className={`nav-link beActive ${pathName === '/about' ? 'text-success' : 'text-dark'}`}>עלינו</NavLink>
                     </li>}
                     {shop.canBuy && <li className="nav-item d-lg-none" data-toggle="collapse" data-target="#navbarSupportedContent">
-                        <NavLink to="/about" className={`nav-link beActive ${pathName === '/about' ? 'text-success' : 'text-dark'}`}>עלינו</NavLink>
+                        <NavLink onClick={handleHomeClick} to="/about" className={`nav-link beActive ${pathName === '/about' ? 'text-success' : 'text-dark'}`}>עלינו</NavLink>
                     </li>}
                     <li className="nav-item d-none d-lg-flex">
-                        <NavLink to="/contact" className={`nav-link beActive ${pathName === '/contact' ? 'text-success' : 'text-dark'}`}>צור קשר</NavLink>
+                        <NavLink onClick={handleHomeClick} to="/contact" className={`nav-link beActive ${pathName === '/contact' ? 'text-success' : 'text-dark'}`}>צור קשר</NavLink>
                     </li>
                     <li className="nav-item d-lg-none" data-toggle="collapse" data-target="#navbarSupportedContent">
-                        <NavLink to="/contact" className={`nav-link beActive ${pathName === '/contact' ? 'text-success' : 'text-dark'}`}>צור קשר</NavLink>
+                        <NavLink onClick={handleHomeClick} to="/contact" className={`nav-link beActive ${pathName === '/contact' ? 'text-success' : 'text-dark'}`}>צור קשר</NavLink>
                     </li>
                     {shop.canBuy && <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
-                        <NavLink to="/delivery" className={`nav-link beActive ${pathName === '/delivery' ? 'text-success' : 'text-dark'}`}>מדיניות משלוחים</NavLink>
+                        <NavLink onClick={handleHomeClick} to="/delivery" className={`nav-link beActive ${pathName === '/delivery' ? 'text-success' : 'text-dark'}`}>מדיניות משלוחים</NavLink>
                     </li>}
                 </ul>
 
                 {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <ul className="navbar-nav ml-auto d-none d-lg-flex">
                     <li className="nav-item">
-                        <NavLink to={`${auth.uid ? '/profile' : '/login'}`} className={`nav-link px-lg-2 ${(pathName === '/register' || pathName === '/login') ? 'text-success' : 'text-dark'}`}>
+                        <NavLink onClick={handleHomeClick} to={`${auth.uid ? '/profile' : '/login'}`} className={`nav-link px-lg-2 ${(pathName === '/register' || pathName === '/login') ? 'text-success' : 'text-dark'}`}>
                             <i className="fas fa-user mx-1"/><span className="mx-1">
                             {!auth.uid && <span>התחבר</span>}
                             {auth.uid && <span className="font-italic text-success">{profile.userName}</span>}
@@ -96,7 +123,7 @@ const Navbar = ({profile, auth, location, shop, setCategory, category, history, 
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to="/cart" className="nav-link px-lg-2 border-left text-dark">
+                        <NavLink onClick={handleHomeClick} to="/cart" className="nav-link px-lg-2 border-left text-dark">
                             <i className="fas fa-shopping-cart mx-1"/>
                             <span className="mx-1 text-success">{shop.cartSum ? shop.cartSum.toFixed(2) : Number(0).toFixed(2)}</span>
                             <i className="fas fa-shekel-sign mx-1"/>

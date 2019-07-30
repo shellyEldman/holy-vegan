@@ -7,8 +7,8 @@ import {firestoreConnect} from "react-redux-firebase";
 
 const Cart = ({getCart, shop, items, removeItemFromCart, history, handleMinus, handlePlus}) => {
     useEffect(() => {
-        // localStorage.setItem("holyVeganCartItems", null);
-        // localStorage.setItem("holyVeganCartSum", null);
+        // // localStorage.setItem("holyVeganCartItems", null);
+        // // localStorage.setItem("holyVeganCartSum", null);
         getCart();
     }, [getCart]);
 
@@ -28,10 +28,14 @@ const Cart = ({getCart, shop, items, removeItemFromCart, history, handleMinus, h
             </div>}
 
             {items && shop.cartItems && shop.cartItems.length > 0 && <div className="col-lg-8">
-                <h4 className="text-dark text-center my-4"><i
-                    className="fas fa-shopping-cart mx-2"/><span>סל הקניות ({shop.cartItems.length})</span></h4>
+                <div className="top d-flex justify-content-between align-items-center">
+                    <p className="text-dark my-4"><i
+                        className="fas fa-shopping-cart mx-2"/><span className="font-weight-bolder">סל הקניות ({shop.cartItems.length})</span></p>
 
-                <div className="card mb-lg-3">
+                    <button onClick={() => history.push('/shop')} className="btn btn-secondary btn-sm"><span>המשך בקניות</span><i className="fas fa-angle-left ml-2"/></button>
+                </div>
+
+                <div className="card">
                     <ul className="list-group list-group-flush">
                         <li className="list-group-item">
                             <div className="row">
@@ -64,7 +68,7 @@ const Cart = ({getCart, shop, items, removeItemFromCart, history, handleMinus, h
                                             {item.brand &&
                                             <p className="py-1 m-0 view-more">{item.amount} {item.unit} | {item.brand}
                                             </p>}
-                                            {!item.brand && <p className="py-1 m-0 view-more">{item.price.toFixed(2)} ₪
+                                            {!item.brand && item.price && <p className="py-1 m-0 view-more">{item.price.toFixed(2)} ₪
                                                 ל- {item.amount} {item.unit}
                                             </p>}
                                             <div>
@@ -85,7 +89,7 @@ const Cart = ({getCart, shop, items, removeItemFromCart, history, handleMinus, h
                                                 </div>
                                                 <small>{item.rangeUnit}</small>
                                             </div>
-                                            <p className="float-right py-1 m-0"><span>מחיר:</span><span
+                                            <p className="float-right py-1 mt-3 mt-lg-0 m-0"><span>מחיר:</span><span
                                                 className="font-weight-bolder ml-1">{(item.price * ing.numOfItems).toFixed(2)} ₪</span>
                                             </p>
                                         </div>
@@ -95,6 +99,9 @@ const Cart = ({getCart, shop, items, removeItemFromCart, history, handleMinus, h
                         })}
                     </ul>
                 </div>
+
+                <button onClick={() => history.push('/shop')} className="btn btn-secondary btn-sm float-right my-3"><span>המשך בקניות</span><i className="fas fa-angle-left ml-2"/></button>
+
             </div>}
             {items && shop.cartItems && shop.cartItems.length > 0 &&
             <div className="col-lg-4 border border-top-0 shadow d-flex flex-column mt-3 pb-3">

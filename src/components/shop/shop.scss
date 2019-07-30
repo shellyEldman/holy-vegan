@@ -73,4 +73,18 @@
       }
     }
   }
+
+  .search-list-my-group {
+    max-height: 370px;
+    overflow-y: scroll;
+
+    li {
+      cursor: pointer;
+
+      &:hover {
+        background-color: #5cb85c;
+        color: white;
+      }
+    }
+  }
 }

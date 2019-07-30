@@ -16,18 +16,20 @@ const App = () => {
     const [category, setCategory] = useState('all');
     const [searchField, setSearchField] = useState('');
 
+    const [itemCategory, setItemCategory] = useState('all');
+    const [itemSearchField, setItemSearchField] = useState('');
+
     return (
         <div className="App bg-light">
-            <Navbar category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>
+            <Navbar itemCategory={itemCategory} setItemCategory={setItemCategory} itemSearchField={itemSearchField} setItemSearchField={setItemSearchField} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>
                 <Switch>
                     <Route exact path="/" render={(props) => <Recipes {...props} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>}/>
                     <Route path="/recipes" render={(props) => <Recipes {...props} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>}/>
-                    <Route path="/shop" component={Shop}/>
+                    <Route path="/shop" render={(props) => <Shop {...props} itemCategory={itemCategory} setItemCategory={setItemCategory} itemSearchField={itemSearchField} setItemSearchField={setItemSearchField}/>}/>
                     <Route path="/login" component={Login}/>
                     <Route path="/register" component={Register}/>
                     <Route path="/profile" component={Profile}/>
                     <Route path="/about" component={About}/>
-                    <Route path="/contact/ser" component={Contact}/>
                     <Route path="/contact" component={Contact}/>
                     <Route path="/cart" component={Cart}/>
                     <Route render={() => <Redirect to="/"/>}/>

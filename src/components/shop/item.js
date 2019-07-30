@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react';
+import {addItemsToCart} from "../../store/actions/shopActions";
+import {connect} from "react-redux";
 
-const Item = ({item}) => {
+const Item = ({item, addToCart}) => {
     const [numOfItems, setNumOfItems] = useState(1);
     const [range, setRange] = useState(1);
 
@@ -24,6 +26,15 @@ const Item = ({item}) => {
       }
     };
 
+    const handleAddToCart = () => {
+        addToCart([
+            {
+                id: item.id,
+                numOfItems
+            }
+        ], item.price*numOfItems);
+    };
+
     return(
         <div className="col-sm-6 col-md-4 col-xl-3" key={item.id}>
             <div className="card shadow-sm mb-3" style={{'minWidth': '227px'}}>
@@ -43,7 +54,7 @@ const Item = ({item}) => {
                         <button onClick={handlePlus} type="button" className="btn btn-sm btn-secondary btn-left">+</button>
                     </div>
                     {item.rangeUnit && <small>{item.rangeUnit}</small>}
-                    <button type="button"
+                    <button onClick={handleAddToCart} type="button"
                             className="btn btn-sm mt-3 btn-block btn-success float-right px-3 px-md-2"><span>הוספה לסל</span><i
                         className="fas fa-cart-plus ml-2"/>
                     </button>
@@ -53,5 +64,10 @@ const Item = ({item}) => {
     );
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        addToCart: (items, sum) => dispatch(addItemsToCart(items, sum))
+    };
+};
 
-export default Item;
+export default connect(null, mapDispatchToProps)(Item);
