@@ -3,25 +3,106 @@ import {Route} from 'react-router-dom';
 import {Helmet} from 'react-helmet';
 import './recipes.scss';
 import RecipesItems from './recipesItems';
+import firebase from "../../config/fbConfig";
 
+const db = firebase.firestore().collection("recipes");
 
 const Recipes = ({match, history, category, setCategory, searchField, setSearchField}) => {
     const [searchBy, setSearchBy] = useState('recipe');
     const [searchByName, setSearchByName] = useState('חפש לפי מתכון');
     const [recipeNames, setRecipeNames] = useState([]);
     const [picked, setPicked] = useState(false);
+    const [recipesPlusId, setRecipesPlusId] = useState([]);
+    const [recipes, setRecipes] = useState([]);
+    const [endReached, setEndReached] = useState(false);
+    const [lastVisible, setLastVisible] = useState('');
+    const [notFound, setNotFound] = useState(false);
 
-    const handleCategoryClick = (category) => {
+    const myElement = document.getElementById('scrollDiv');   /* col-lg-10 */
+
+    const handleCategoryClick = (newCategory) => {
+        setPicked(false);
+        setNotFound(false);
+        if (newCategory === category) {
+            setEndReached(false);
+            setRecipes([]);
+            if (myElement) {
+                myElement.scrollTo(0, 0);
+                window.scrollTo(0, 0);
+            }
+
+            let rec = [];
+
+            if (category !== 'all') {
+                db.where("categories", "array-contains", category).orderBy('order', 'desc').limit(12).get()
+                    .then(querySnapshot => {
+                        const myLast = querySnapshot.docs[querySnapshot.docs.length - 1];
+                        if (myLast) {
+                            setLastVisible(myLast);
+                            querySnapshot.forEach((doc) => {
+                                rec.push({...doc.data(), id: doc.id});
+                            });
+                            setRecipes(rec);
+                        } else {
+                            setEndReached(true);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            } else {
+                db.orderBy('order', 'desc').limit(12).get()
+                    .then(querySnapshot => {
+                        const myLast = querySnapshot.docs[querySnapshot.docs.length - 1];
+                        if (myLast) {
+                            setLastVisible(myLast);
+                            querySnapshot.forEach((doc) => {
+                                rec.push({...doc.data(), id: doc.id});
+                            });
+                            setRecipes(rec);
+                        } else {
+                            setEndReached(true);
+                        }
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            }
+        }
         setSearchField('');
-        setCategory(category);
+        setCategory(newCategory);
         if (!match.isExact) {
             history.push('/recipes');
         }
     };
 
     const handleRecipePick = (recipePickName) => {
-        setSearchField(recipePickName);
         setPicked(true);
+        setRecipes([]);
+        setSearchField(recipePickName);
+        setEndReached(true);
+        let id = '';
+        recipesPlusId.forEach(recipe => {
+            if (recipe.name === recipePickName) {
+                id = recipe.id;
+            }
+        });
+
+        if (id) {
+            let recipe = [];
+            db.doc(id).get()
+                .then(doc => {
+                    recipe.push({...doc.data(), id: doc.id});
+                    setRecipes(recipe);
+                    setNotFound(false);
+                })
+                .catch(function (error) {
+                    console.log("Error getting documents: ", error);
+                });
+        } else {
+            setNotFound(true);
+            console.log('not found');
+        }
         setCategory('all');
     };
 
@@ -31,7 +112,9 @@ const Recipes = ({match, history, category, setCategory, searchField, setSearchF
                 <title>הולי ויגן - מתכונים טבעוניים</title>
                 <meta name="description" content="מגוון מתכונים טבעוניים וללא גלוטן" />
             </Helmet>
-            <div className="col-lg-2 choose-items d-none d-lg-inline border-right shadow-sm m-0 p-0">
+
+
+            <div className="col-lg-2 bg-light position-fixed choose-items d-none d-lg-inline border-right shadow-sm m-0 p-0">
                 <div className="categories-lg mt-3 text-dark">
                     <div onClick={() => handleCategoryClick('all')} className={`${category === 'all' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>כל המתכונים</div>
                     <div onClick={() => handleCategoryClick('burger')} className={`${category === 'burger' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>המבורגר וקציצות</div>
@@ -50,7 +133,7 @@ const Recipes = ({match, history, category, setCategory, searchField, setSearchF
                 </div>
             </div>
 
-            <Route exact path={["/", "/recipes"]} render={() => <div className="col d-lg-none">
+            <Route exact path={["/", "/recipes"]} render={() => <div className="col d-lg-none" >
                 <div className="input-group bg-light pt-3 searchBar-sm">
                     <input style={{'outline': 'none'}} type="text" className="form-control"
                            placeholder={`${searchBy === 'recipe' ? 'הזן את שם המתכון..' : 'הזן את שם המרכיב..'}`}
@@ -92,7 +175,8 @@ const Recipes = ({match, history, category, setCategory, searchField, setSearchF
                 </ul>}
             </div>}/>
 
-            <RecipesItems recipeNames={recipeNames} handleRecipePick={handleRecipePick} setRecipeNames={setRecipeNames} picked={picked} setPicked={setPicked} searchBy={searchBy} setSearchBy={setSearchBy} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>
+            <RecipesItems notFound={notFound} handleCategoryClick={handleCategoryClick} lastVisible={lastVisible} setLastVisible={setLastVisible} myElement={myElement} endReached={endReached} setEndReached={setEndReached} recipes={recipes} setRecipes={setRecipes} setRecipesPlusId={setRecipesPlusId} recipeNames={recipeNames} handleRecipePick={handleRecipePick} setRecipeNames={setRecipeNames} picked={picked} setPicked={setPicked} searchBy={searchBy} setSearchBy={setSearchBy} category={category} setCategory={setCategory} searchField={searchField} setSearchField={setSearchField}/>
+
         </div>
     );
 };

@@ -37,19 +37,6 @@ export const signUp = (newUser) => {
                 userName: newUser.userName,
                 email: newUser.email
             });
-        }).then(() => {
-            firestore.collection('userNames').doc('userNames').get().then(doc => {
-                const data = doc.data();
-                const names = data.names;
-                firestore.collection('userNames').doc('userNames').set({
-                    names: [...names, newUser.userName]
-                }).then(() => {
-                    dispatch({type: 'SIGNUP_SUCCESS'});
-                    dispatch({type: 'STOP_LOADING'});
-                });
-            }).catch(function(error) {
-                console.log("Error getting document:", error);
-            });
         }).catch((err) => {
             dispatch({type: 'SIGNUP_ERROR', err});
             dispatch({type: 'STOP_LOADING'});

@@ -14,7 +14,7 @@ import 'moment/locale/he';
 const storage = firebase.storage();
 const db = firebase.firestore();
 
-const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
+const Recipe = ({recipe, match, auth, items, addToCart, history, otherRecipes}) => {
     const [userName, setUserName] = useState('');
     const [comment, setComment] = useState('');
     const [image, setImage] = useState(null);
@@ -229,6 +229,12 @@ const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
     const handleAddItemsToCart = () => {
         handleShowAddToCart();
         addToCart(buyRecipeIngredients, finalPrice());
+    };
+
+    const handleBack = () => {
+        history.push('/recipes');
+        myElement.scrollTo(0, 0);
+        window.scrollTo(0, 0);
     };
 
     if (!recipe) {
@@ -515,12 +521,173 @@ const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
                         </Modal.Footer>
                     </Modal>
 
-                    <div onClick={() => history.push('/recipes')} className="col-12 mt-3 d-lg-none float-right">
+
+                    <div className="col-12 text-dark mt-3 mt-md-4 insta-follow">
+                        <a href="https://www.instagram.com/holy_vegan_il/" target="_blank" rel="noopener noreferrer">
+                            <h5 className="d-flex justify-content-center align-items-center text-dark font-weight-bolder">
+                                <span>עקבו אחרינו באינסטגרם</span><i className="fab fa-instagram mx-2"/></h5>
+                            <h5 className="text-center text-success font-italic font-weight-bolder" dir="ltr">@holy_vegan_il</h5>
+                        </a>
+
+                        <div className="d-md-none mt-3">
+                            <InstagramEmbed
+                                url={'https://www.instagram.com/p/B0fsqcqnyBI/'}
+                                // maxWidth={320}
+                                hideCaption={true}
+                                containerTagName='div'
+                                protocol=''
+                                injectScript
+                            />
+                        </div>
+                        <div className="row mt-3 d-none d-md-flex">
+                            <div className="col-12 col-md-6 col-xl-4 d-none d-md-flex">
+                                <InstagramEmbed
+                                    url={'https://www.instagram.com/p/Bz_D6QyAiqg/'}
+                                    maxWidth={320}
+                                    hideCaption={true}
+                                    containerTagName='div'
+                                    protocol=''
+                                    injectScript
+                                />
+                            </div>
+
+                            <div className="col-12 col-md-6 col-xl-4">
+                                <InstagramEmbed
+                                    url={'https://www.instagram.com/p/B0fsqcqnyBI/'}
+                                    maxWidth={320}
+                                    hideCaption={true}
+                                    containerTagName='div'
+                                    protocol=''
+                                    injectScript
+                                />
+                            </div>
+                            <div className="col-12 col-xl-4 d-none d-xl-flex">
+                                <InstagramEmbed
+                                    url={'https://www.instagram.com/p/Bz5F9P2gjXK/'}
+                                    maxWidth={320}
+                                    hideCaption={true}
+                                    containerTagName='div'
+                                    protocol=''
+                                    injectScript
+                                />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {otherRecipes && <div className="col-12 text-dark mt-3 mt-md-4">
+                        <h5 className="text-center text-dark font-weight-bolder">מתכונים נוספים שתאהבו <span role="img" aria-label="emoji">😋</span></h5>
+
+                        <div className="row d-none d-md-flex mt-3">
+                            <div className="col-6 col-xl-4 choose-another-recipe">
+                                <div onClick={() => {
+                                    history.push(`/recipes/${otherRecipes[0].id}`);
+                                    myElement.scrollTo(0, 0);
+                                    window.scrollTo(0, 0);
+                                }} className="card shadow-sm mb-3 text-dark" style={{'maxWidth': '320px'}}>
+                                    <img src={otherRecipes[0].imgUrl} className="card-img-top more-like-recipe"
+                                         alt={otherRecipes[0].recipeName}/>
+                                    <div className="card-body">
+                                        <p className="card-text text-center font-weight-bolder">{otherRecipes[0].recipeName}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-6 col-xl-4 choose-another-recipe">
+                                <div onClick={() => {
+                                    history.push(`/recipes/${otherRecipes[1].id}`);
+                                    myElement.scrollTo(0, 0);
+                                    window.scrollTo(0, 0);
+                                }} className="card shadow-sm mb-3 text-dark" style={{'maxWidth': '320px'}}>
+                                    <img src={otherRecipes[1].imgUrl} className="card-img-top more-like-recipe"
+                                         alt={otherRecipes[1].recipeName}/>
+                                    <div className="card-body">
+                                        <p className="card-text text-center font-weight-bolder">{otherRecipes[1].recipeName}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="col-6 col-xl-4 d-none d-xl-flex choose-another-recipe">
+                                <div onClick={() => {
+                                    history.push(`/recipes/${otherRecipes[2].id}`);
+                                    myElement.scrollTo(0, 0);
+                                    window.scrollTo(0, 0);
+                                }} className="card shadow-sm mb-3 text-dark" style={{'maxWidth': '320px'}}>
+                                    <img src={otherRecipes[2].imgUrl} className="card-img-top more-like-recipe"
+                                         alt={otherRecipes[2].recipeName}/>
+                                    <div className="card-body">
+                                        <p className="card-text text-center font-weight-bolder">{otherRecipes[2].recipeName}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="Indicators" className="carousel slide mt-3 d-md-none" data-ride="carousel">
+                            <ol className="carousel-indicators">
+                                <li data-target="#Indicators" data-slide-to="0" className="active"/>
+                                <li data-target="#Indicators" data-slide-to="1"/>
+                                <li data-target="#Indicators" data-slide-to="2"/>
+                            </ol>
+                            <div className="carousel-inner">
+                                <div className="carousel-item active">
+                                    <div onClick={() => {
+                                        history.push(`/recipes/${otherRecipes[0].id}`);
+                                        myElement.scrollTo(0, 0);
+                                        window.scrollTo(0, 0);
+                                    }} className="card shadow-sm mb-3 text-dark">
+                                        <img src={otherRecipes[0].imgUrl} className="card-img-top more-like-recipe"
+                                             alt={otherRecipes[0].recipeName}/>
+                                        <div className="card-body">
+                                            <p className="card-text text-center font-weight-bolder">{otherRecipes[0].recipeName}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="carousel-item">
+                                    <div onClick={() => {
+                                        history.push(`/recipes/${otherRecipes[1].id}`);
+                                        myElement.scrollTo(0, 0);
+                                        window.scrollTo(0, 0);
+                                    }} className="card shadow-sm mb-3 text-dark">
+                                        <img src={otherRecipes[1].imgUrl} className="card-img-top more-like-recipe"
+                                             alt={otherRecipes[1].recipeName}/>
+                                        <div className="card-body">
+                                            <p className="card-text text-center font-weight-bolder">{otherRecipes[1].recipeName}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="carousel-item">
+                                    <div onClick={() => {
+                                        history.push(`/recipes/${otherRecipes[2].id}`);
+                                        myElement.scrollTo(0, 0);
+                                        window.scrollTo(0, 0);
+                                    }}
+                                         className="card shadow-sm mb-3 text-dark">
+                                        <img src={otherRecipes[2].imgUrl} className="card-img-top more-like-recipe"
+                                             alt={otherRecipes[2].recipeName}/>
+                                        <div className="card-body">
+                                            <p className="card-text text-center font-weight-bolder">{otherRecipes[2].recipeName}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <a className="carousel-control-prev" href="#Indicators" role="button"
+                               data-slide="prev">
+                                <span className="carousel-control-prev-icon" aria-hidden="true"/>
+                                <span className="sr-only">Previous</span>
+                            </a>
+                            <a className="carousel-control-next" href="#Indicators" role="button"
+                               data-slide="next">
+                                <span className="carousel-control-next-icon" aria-hidden="true"/>
+                                <span className="sr-only">Next</span>
+                            </a>
+                        </div>
+                    </div>}
+
+                    <div onClick={handleBack} className="col-12 mt-3 d-lg-none float-right">
                         <p className="goBack text-dark float-right"><span>חזרה למתכונים</span><i
                             className="fas fa-arrow-left mx-1"/></p>
                     </div>
 
-                    <div className="col-12 comments mt-5 mb-5">
+                    <div className="col-12 comments mt-3 mt-md-4 mb-5">
                         <div className="border-bottom border-dark pb-3 mb-0 d-flex justify-content-between">
                             <h4 className="font-weight-bolder mb-2">תגובות
                                 ({recipe.comments ? recipe.comments.length : 0})</h4>
@@ -605,12 +772,24 @@ const Recipe = ({recipe, match, auth, items, addToCart, history}) => {
 const mapStateToProps = (state, ownProps) => {
     const id = ownProps.match.params.id;
     const recipes = state.firestore.data.recipes;
+    const ordered = state.firestore.ordered.recipes;
+    let otherRecipes = [];
+    if (ordered && ordered.length > 0) {
+        let i = 0;
+        while (otherRecipes.length < 3 || i >= ordered.length) {
+            if (ordered[i].id !== id) {
+                otherRecipes.push(ordered[i]);
+            }
+            i++;
+        }
+    }
     const recipe = recipes ? recipes[id] : null;
     return {
         recipe,
         shop: state.shop,
         auth: state.firebase.auth,
-        items: state.firestore.data.items
+        items: state.firestore.data.items,
+        otherRecipes
     };
 };
 

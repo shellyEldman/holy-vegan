@@ -285,20 +285,83 @@ const EditItemFinal = ({item, id, history, itemsId, items}) => {
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
                             <div className="input-group-text">
-                                <input name="bread" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'bread')}/>
-                            </div>
-                        </div>
-                        <p className="form-control">מאפיה</p>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
                                 <input name="vege" onChange={handleCheck} type="checkbox"
                                        checked={categories.find((c) => c === 'vege')}/>
                             </div>
                         </div>
-                        <p className="form-control">פירות וירקות</p>
+                        <p className="form-control">ירקות</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="fruits" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'fruits')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">פירות</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="legumes" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'legumes')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">קטניות</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="spices" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'spices')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">תבלינים</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="grain" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'grain')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">קמחים ודגנים</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="oil" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'oil')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">שמנים ורטבים</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="canned" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'canned')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">שימורים וממרחים</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="granola" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'granola')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">גרנולה וקונפיטורות</p>
+                    </div>
+                    <div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input name="nuts" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'nuts')}/>
+                            </div>
+                        </div>
+                        <p className="form-control">אגוזים ופיצוחים</p>
                     </div>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
@@ -312,29 +375,11 @@ const EditItemFinal = ({item, id, history, itemsId, items}) => {
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
                             <div className="input-group-text">
-                                <input name="meat" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'meat')}/>
+                                <input name="east" onChange={handleCheck} type="checkbox"
+                                       checked={categories.find((c) => c === 'east')}/>
                             </div>
                         </div>
-                        <p className="form-control">תחליפי בשר</p>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <input name="drink" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'drink')}/>
-                            </div>
-                        </div>
-                        <p className="form-control">משקאות ואלכוהול</p>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <input name="cook" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'cook')}/>
-                            </div>
-                        </div>
-                        <p className="form-control">בישול, אפיה ושימורים</p>
+                        <p className="form-control">מהמזרח</p>
                     </div>
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
@@ -357,47 +402,11 @@ const EditItemFinal = ({item, id, history, itemsId, items}) => {
                     <div className="input-group mb-3">
                         <div className="input-group-prepend">
                             <div className="input-group-text">
-                                <input name="grain" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'grain')}/>
-                            </div>
-                        </div>
-                        <p className="form-control">קטניות ודגנים</p>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
                                 <input name="sweet" onChange={handleCheck} type="checkbox"
                                        checked={categories.find((c) => c === 'sweet')}/>
                             </div>
                         </div>
                         <p className="form-control">חטיפים ומתוקים</p>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <input name="pharm" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'pharm')}/>
-                            </div>
-                        </div>
-                        <p className="form-control">פארם ותינוקות</p>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <input name="home" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'home')}/>
-                            </div>
-                        </div>
-                        <p className="form-control">בית ובעלי-חיים</p>
-                    </div>
-                    <div className="input-group mb-3">
-                        <div className="input-group-prepend">
-                            <div className="input-group-text">
-                                <input name="other" onChange={handleCheck} type="checkbox"
-                                       checked={categories.find((c) => c === 'other')}/>
-                            </div>
-                        </div>
-                        <p className="form-control">שונות</p>
                     </div>
                 </div>
             </div>

@@ -16,7 +16,7 @@ body {
 @media (min-width: 992px) {
     .App {
         height: 100vh;
-        overflow: hidden;
+        /*overflow: hidden;*/
     }
 }
 
@@ -39,3 +39,6 @@ body {
     z-index: 3000;
 }
 
+a {
+    text-decoration: none !important;
+}

@@ -152,12 +152,35 @@ const AddRecipe = ({history}) => {
                     order,
                     comments: []
                 })
-                    .then(function() {
+                    .then(function () {
                         console.log("Document successfully written!");
-                        setLoading(false);
-                        history.push('/');
+
+                        let newNames = [];
+                        db.collection('recipesNames').doc('names').get()
+                            .then(function (doc) {
+                                const newName = {
+                                    name: recipeName,
+                                    id: generatedId
+                                };
+                                newNames = [...doc.data().names, newName];
+                                db.collection('recipesNames').doc('names').set({
+                                    names: [...newNames]
+                                })
+                                    .then(function () {
+                                        console.log("Document successfully written!");
+                                        setLoading(false);
+                                        history.push('/');
+                                    })
+                                    .catch(function (error) {
+                                        console.error("Error writing document: ", error);
+                                    });
+                            })
+                            .catch(function (error) {
+                                console.error("Error getting document recipes names: ", error);
+                            });
+
                     })
-                    .catch(function(error) {
+                    .catch(function (error) {
                         console.error("Error writing document: ", error);
                     });
             });
@@ -178,11 +201,11 @@ const AddRecipe = ({history}) => {
                 order,
                 comments: []
             })
-                .then(function(docRef) {
+                .then(function (docRef) {
                     console.log("Document successfully written!", docRef.id);
                     saveImageWithTrueId(docRef.id)
                 })
-                .catch(function(error) {
+                .catch(function (error) {
                     console.error("Error writing document: ", error);
                 });
         } else {
@@ -225,7 +248,8 @@ const AddRecipe = ({history}) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="order">סדר</label>
-                            <input value={order} onChange={(e) => setOrder(Number(e.target.value))} type="number" className="form-control" id="order"/>
+                            <input value={order} onChange={(e) => setOrder(Number(e.target.value))} type="number"
+                                   className="form-control" id="order"/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="introduction">הקדמה</label>
@@ -475,46 +499,57 @@ const AddRecipe = ({history}) => {
                         <p>{introduction}</p>
                         <h4 className="font-weight-bolder">מרכיבים</h4>
 
-                        {ingredients['1'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['1'].title}</p>}
+                        {ingredients['1'].title &&
+                        <p className="mb-2 mt-3 font-weight-bolder">{ingredients['1'].title}</p>}
                         <ul className="list-group list-group-flush border-none">
-                        {ingredients['1'].title && ingredients['1'].items.map((item, i) => {
-                            return(
-                                <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['1'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                    className="fas fa-circle mr-2"/><span>{item}</span></li>
-                            )
-                        })}
+                            {ingredients['1'].title && ingredients['1'].items.map((item, i) => {
+                                return (
+                                    <li key={i}
+                                        className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['1'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                        <i
+                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                )
+                            })}
                         </ul>
 
-                        {ingredients['2'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['2'].title}</p>}
+                        {ingredients['2'].title &&
+                        <p className="mb-2 mt-3 font-weight-bolder">{ingredients['2'].title}</p>}
                         <ul className="list-group list-group-flush border-none">
                             {ingredients['2'].title && ingredients['2'].items.map((item, i) => {
-                                return(
-                                    <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['2'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                        className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                return (
+                                    <li key={i}
+                                        className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['2'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                        <i
+                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
                                 )
                             })}
                         </ul>
 
-                        {ingredients['3'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['3'].title}</p>}
+                        {ingredients['3'].title &&
+                        <p className="mb-2 mt-3 font-weight-bolder">{ingredients['3'].title}</p>}
                         <ul className="list-group list-group-flush border-none">
                             {ingredients['3'].title && ingredients['3'].items.map((item, i) => {
-                                return(
-                                    <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['3'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                        className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                return (
+                                    <li key={i}
+                                        className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['3'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                        <i
+                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
                                 )
                             })}
                         </ul>
 
-                        {ingredients['4'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['4'].title}</p>}
+                        {ingredients['4'].title &&
+                        <p className="mb-2 mt-3 font-weight-bolder">{ingredients['4'].title}</p>}
                         <ul className="list-group list-group-flush border-none">
                             {ingredients['4'].title && ingredients['2'].items.map((item, i) => {
-                                return(
-                                    <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['4'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                        className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                return (
+                                    <li key={i}
+                                        className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['4'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                        <i
+                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
                                 )
                             })}
                         </ul>
-
 
 
                         <button className="btn btn-success btn-block mt-3"><span>רכישת מוצרים עבור מתכון זה</span><i
@@ -523,17 +558,17 @@ const AddRecipe = ({history}) => {
                         <h4 className="font-weight-bolder mt-4">הוראות הכנה</h4>
                         <ul className="list-group list-group-flush border-none">
                             {instructions.map((item, i) => {
-                              return(
-                                  <li key={i} className="bg-light py-1 d-flex align-items-start"><span
-                                      className="mr-2 font-weight-bolder">{i+1}.</span><span>{item}</span>
-                                  </li>
-                              )
+                                return (
+                                    <li key={i} className="bg-light py-1 d-flex align-items-start"><span
+                                        className="mr-2 font-weight-bolder">{i + 1}.</span><span>{item}</span>
+                                    </li>
+                                )
                             })}
                         </ul>
                     </div>
 
-                     <div className="col-lg-6 cart-items">
-                         {insta && <InstagramEmbed
+                    <div className="col-lg-6 cart-items">
+                        {insta && <InstagramEmbed
                             url={insta}
                             // maxWidth={320}
                             hideCaption={true}

@@ -69,9 +69,10 @@
   }
 
   .col-lg-2.choose-items {
-    height: 100%;
-    overflow-y: scroll;
-    direction: ltr;
+    //height: 100%;
+    //overflow-y: scroll;
+    //direction: ltr;
+    height: 100vh;
 
     .category-item {
       border-bottom-left-radius: 17px;
@@ -85,8 +86,8 @@
   }
 
   .col-lg-10.items {
-    height: 100%;
-    overflow-y: scroll;
+    //height: 100%;
+    //overflow-y: scroll;
 
     .items-list {
       //margin-bottom: 270px;
@@ -99,6 +100,9 @@
 
     .searchBar {
       z-index: 100;
+      position: sticky;
+      //position: -webkit-sticky;
+      top: 68px;
       -webkit-box-shadow: 0 8px 6px -6px grey;
       -moz-box-shadow: 0 8px 6px -6px grey;
       box-shadow: 0 8px 6px -6px grey;
@@ -106,9 +110,18 @@
 
 
     @media (min-width: 992px) {
-      height: 100%;
-      overflow-y: scroll;
+      position: absolute;
+      left: 0;
+      //height: 100%;
+      //overflow-y: scroll;
     }
+  }
+
+  .searchBar-sm {
+    z-index: 100;
+    -webkit-box-shadow: 0 8px 6px -6px grey;
+    -moz-box-shadow: 0 8px 6px -6px grey;
+    box-shadow: 0 8px 6px -6px grey;
   }
 
 
@@ -213,6 +226,18 @@
     font-size: 17px;
   }
 
+  img.more-like-recipe {
+    height: 277px;
+    width: 100%;
+    object-fit: cover;
+    @media (min-width: 576px) {
+      height: 370px;
+    }
+  }
+
+  .choose-another-recipe {
+    cursor: pointer;
+  }
 }
 
 .modalItem {

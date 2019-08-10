@@ -35,8 +35,8 @@ const Navbar = ({itemCategory, setItemCategory, setItemSearchField, profile, aut
 
     return (
         <nav id="mainNav" className="navbar fixed-top shadow-sm navbar-expand-lg navbar-light bg-light border py-2">
-            <NavLink onClick={handleHomeClick} to="/" className="navbar-brand"><span className="text-success mx-1">הולי-ויגן</span><i
-                className="fas fa-carrot"/></NavLink>
+            <NavLink onClick={handleHomeClick} to="/" className="navbar-brand"><span className="text-success">הולי<i
+                className="fas fa-carrot mx-0"/>ויגן</span></NavLink>
             <button className="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                     aria-label="Toggle navigation">
@@ -73,7 +73,7 @@ const Navbar = ({itemCategory, setItemCategory, setItemSearchField, profile, aut
                     {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <li className="nav-item d-none d-lg-flex">
                         <NavLink onClick={handleHomeClick} to="/shop" className={`nav-link beActive ${pathName === '/shop' ? 'text-success' : 'text-dark'}`}>חנות</NavLink>
                     </li>}
-                    <li className="nav-item dropdown d-lg-none">
+                    {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <li className="nav-item dropdown d-lg-none">
                         <span className={`nav-link dropdown-toggle ${pathName === '/shop' ? 'text-success' : 'text-dark'}`} id="navbarDropdown" role="button"
                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             חנות
@@ -95,7 +95,7 @@ const Navbar = ({itemCategory, setItemCategory, setItemSearchField, profile, aut
                             <div onClick={() => handleSelectItemCategory('frozen')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`py-1 border-bottom dropdown-item ${itemCategory === 'frozen' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>קפואים</div>
                             <div onClick={() => handleSelectItemCategory('sweet')} data-toggle="collapse" data-target="#navbarSupportedContent" className={`pt-1 pb-1 dropdown-item ${itemCategory === 'sweet' ? 'text-success' : ''}`} style={{'cursor': 'pointer'}}>חטיפים ומתוקים</div>
                         </div>
-                    </li>
+                    </li>}
                     {shop.canBuy && <li className="nav-item d-none d-lg-flex">
                         <NavLink onClick={handleHomeClick} to="/about" className={`nav-link beActive ${pathName === '/about' ? 'text-success' : 'text-dark'}`}>עלינו</NavLink>
                     </li>}
@@ -108,28 +108,33 @@ const Navbar = ({itemCategory, setItemCategory, setItemSearchField, profile, aut
                     <li className="nav-item d-lg-none" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <NavLink onClick={handleHomeClick} to="/contact" className={`nav-link beActive ${pathName === '/contact' ? 'text-success' : 'text-dark'}`}>צור קשר</NavLink>
                     </li>
+                    <li className="nav-item d-none d-lg-flex">
+                        <a className="nav-link text-dark" href="https://www.instagram.com/holy_vegan_il/" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"/></a>
+                    </li>
+                    <li className="nav-item d-lg-none">
+                        <a className="nav-link text-dark" href="https://www.instagram.com/holy_vegan_il/" target="_blank" rel="noopener noreferrer"><span>אינסטגרם</span><i className="fab fa-instagram mx-2"/></a>
+                    </li>
                     {shop.canBuy && <li className="nav-item" data-toggle="collapse" data-target="#navbarSupportedContent">
                         <NavLink onClick={handleHomeClick} to="/delivery" className={`nav-link beActive ${pathName === '/delivery' ? 'text-success' : 'text-dark'}`}>מדיניות משלוחים</NavLink>
                     </li>}
                 </ul>
 
-                {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <ul className="navbar-nav ml-auto d-none d-lg-flex">
-                    <li className="nav-item">
+               <ul className="navbar-nav ml-auto d-none d-lg-flex">
+                   {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <li className="nav-item">
                         <NavLink onClick={handleHomeClick} to={`${auth.uid ? '/profile' : '/login'}`} className={`nav-link px-lg-2 ${(pathName === '/register' || pathName === '/login') ? 'text-success' : 'text-dark'}`}>
-                            <i className="fas fa-user mx-1"/><span className="mx-1">
                             {!auth.uid && <span>התחבר</span>}
-                            {auth.uid && <span className="font-italic text-success">{profile.userName}</span>}
-                        </span>
+                            {auth.uid && <span className="text-success mx-1">{profile.userName}</span>}
+                            <i className="fas fa-user mx-1"/>
                         </NavLink>
-                    </li>
-                    <li className="nav-item">
+                    </li>}
+                   {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' &&  <li className="nav-item">
                         <NavLink onClick={handleHomeClick} to="/cart" className="nav-link px-lg-2 border-left text-dark">
                             <i className="fas fa-shopping-cart mx-1"/>
                             <span className="mx-1 text-success">{shop.cartSum ? shop.cartSum.toFixed(2) : Number(0).toFixed(2)}</span>
                             <i className="fas fa-shekel-sign mx-1"/>
                         </NavLink>
-                    </li>
-                </ul>}
+                    </li>}
+                </ul>
 
             </div>
         </nav>
