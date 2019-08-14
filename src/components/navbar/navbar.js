@@ -120,13 +120,13 @@ const Navbar = ({itemCategory, setItemCategory, setItemSearchField, profile, aut
                 </ul>
 
                <ul className="navbar-nav ml-auto d-none d-lg-flex">
-                   {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <li className="nav-item">
+                    <li className="nav-item">
                         <NavLink onClick={handleHomeClick} to={`${auth.uid ? '/profile' : '/login'}`} className={`nav-link px-lg-2 ${(pathName === '/register' || pathName === '/login') ? 'text-success' : 'text-dark'}`}>
                             {!auth.uid && <span>התחבר</span>}
                             {auth.uid && <span className="text-success mx-1">{profile.userName}</span>}
                             <i className="fas fa-user mx-1"/>
                         </NavLink>
-                    </li>}
+                    </li>
                    {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' &&  <li className="nav-item">
                         <NavLink onClick={handleHomeClick} to="/cart" className="nav-link px-lg-2 border-left text-dark">
                             <i className="fas fa-shopping-cart mx-1"/>

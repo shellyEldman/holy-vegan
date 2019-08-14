@@ -777,7 +777,7 @@ const mapStateToProps = (state, ownProps) => {
     if (ordered && ordered.length > 0) {
         let i = 0;
         while (otherRecipes.length < 3 || i >= ordered.length) {
-            if (ordered[i].id !== id) {
+            if (ordered[i] && ordered[i].id !== id) {
                 otherRecipes.push(ordered[i]);
             }
             i++;

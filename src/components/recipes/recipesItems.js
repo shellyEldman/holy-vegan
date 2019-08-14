@@ -4,13 +4,23 @@ import Recipe from './recipe';
 import {connect} from "react-redux";
 import firebase from "../../config/fbConfig";
 
+const dbUsers = firebase.firestore().collection('users');
 const dbNames = firebase.firestore().collection("recipesNames");
 const db = firebase.firestore().collection("recipes");
 const VisibilitySensor = require('react-visibility-sensor').default;
 
-const RecipesItems = ({notFound, handleCategoryClick, lastVisible, setLastVisible, myElement, endReached, setEndReached, recipes, setRecipes, setRecipesPlusId, recipeNames, setRecipeNames, handleRecipePick, picked, setPicked, category, setCategory, searchField, setSearchField, searchBy, setSearchBy}) => {
+const RecipesItems = ({auth, profile, notFound, handleCategoryClick, lastVisible, setLastVisible, myElement, endReached, setEndReached, recipes, setRecipes, setRecipesPlusId, recipeNames, setRecipeNames, handleRecipePick, picked, setPicked, category, searchField, setSearchField, searchBy, setSearchBy}) => {
     const [categoryName, setCategoryName] = useState('כל המתכונים');
     const [open, setOpen] = useState(false);
+    const [fav, setFav] = useState([]);
+
+    useEffect(() => {
+        if (profile && profile.isLoaded) {
+            if (profile.fav) {
+                setFav([...profile.fav]);
+            }
+        }
+    }, [profile]);
 
     useEffect(() => {
         if (!picked) {
@@ -170,6 +180,56 @@ const RecipesItems = ({notFound, handleCategoryClick, lastVisible, setLastVisibl
         }
     };
 
+    const handleAddFav = (e, id) => {
+        e.stopPropagation();
+        dbUsers.doc(auth.uid).get()
+            .then((doc) => {
+                let fav = [];
+                if (doc.data().fav) {
+                    fav = [...doc.data().fav, id];
+                } else {
+                    fav.push(id);
+                }
+                const newData = {
+                    ...doc.data(),
+                    fav
+                };
+                dbUsers.doc(auth.uid).set({
+                    ...newData
+                }).then(() => {
+                    console.log('user saved!');
+                }).catch((err) => {
+                    console.log('error saving user..', err);
+                });
+            })
+            .catch((err) => {
+                console.log('no such user', err);
+            });
+    };
+
+    const handleRemoveFav = (e, id) => {
+        e.stopPropagation();
+        dbUsers.doc(auth.uid).get()
+            .then((doc) => {
+                const fav = [...doc.data().fav];
+                const filterFav = fav.filter(favId => favId !== id);
+                const newData = {
+                    ...doc.data(),
+                    fav: filterFav
+                };
+                dbUsers.doc(auth.uid).set({
+                    ...newData
+                }).then(() => {
+                    console.log('user saved!');
+                }).catch((err) => {
+                    console.log('error saving user..', err);
+                });
+            })
+            .catch((err) => {
+                console.log('no such user', err);
+            });
+    };
+
     return (
         <div id="scrollDiv" className="col-lg-10 bg-light items p-0">
             <div className="container">
@@ -301,16 +361,23 @@ const RecipesItems = ({notFound, handleCategoryClick, lastVisible, setLastVisibl
                             {recipes && recipes.map(recipe => {
                                 return (
                                     <div key={recipe.id} className="col-sm-6 col-md-4 col-xl-3">
-                                        <Link to={`/recipes/${recipe.id}`} style={{textDecoration: 'none'}}
-                                              className="subnav_add">
-                                            <div className="card recipe-main-card shadow-sm mb-3 text-dark">
+                                        <div className="card recipe-main-card shadow-sm mb-3 text-dark">
+                                            <Link to={`/recipes/${recipe.id}`} style={{textDecoration: 'none'}}
+                                                  className="subnav_add">
                                                 <img src={recipe.imgUrl} className="card-img-top"
                                                      alt={recipe.recipeName}/>
-                                                <div className="card-body">
-                                                    <p className="card-text text-center font-weight-bolder">{recipe.recipeName}</p>
-                                                </div>
+                                            </Link>
+                                            <div className="card-body">
+                                                <p className="card-text font-weight-bolder d-flex justify-content-between align-items-center">
+                                                    <Link to={`/recipes/${recipe.id}`} style={{textDecoration: 'none'}}
+                                                          className="subnav_add"><span
+                                                        className="text-dark">{recipe.recipeName}</span></Link>
+                                                    {fav.includes(recipe.id) ?
+                                                        <i onClick={(e) => handleRemoveFav(e, recipe.id)} className="fas fa-star text-success"/> :
+                                                        <i onClick={(e) => handleAddFav(e, recipe.id)}
+                                                           className="far fa-star"/>}</p>
                                             </div>
-                                        </Link>
+                                        </div>
                                     </div>
                                 );
                             })}
@@ -351,7 +418,8 @@ const RecipesItems = ({notFound, handleCategoryClick, lastVisible, setLastVisibl
 
 const mapStateToProps = (state) => {
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        profile: state.firebase.profile
     }
 };
 

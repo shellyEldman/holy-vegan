@@ -11,20 +11,32 @@ const Register = ({signUp, loading, authError, auth}) => {
 
     const [passwordLengthError, setPasswordLengthError] = useState(false);
     const [emailInvalid, setEmailInvalid] = useState(false);
+    const [userInvalid, setUserInvalid] = useState(false);
 
     const handleUserName = (e) => {
         setUserName(e.target.value);
+        setUserInvalid(false);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (checkValidEmail() && checkPasswordValid()) {
+        if (checkValidEmail() && checkPasswordValid() && checkValidUser()) {
             const newUser = {
                 userName,
                 email,
                 password
             };
             signUp(newUser);
+        }
+    };
+
+    const checkValidUser = () => {
+        if (userName.length < 2) {
+            setUserInvalid(true);
+            return false;
+        } else {
+            setUserInvalid(false);
+            return true;
         }
     };
 
@@ -81,6 +93,8 @@ const Register = ({signUp, loading, authError, auth}) => {
                             <input type="text" maxLength="37"
                                    className={`form-control`} id="name"
                                    placeholder="הקלד את שמך המלא" value={userName} onChange={handleUserName}/>
+                            {userInvalid &&
+                            <small className="text-danger">שם המשתמש צריך להכיל לפחות 2 תוים.</small>}
                         </div>
                         {/*<div className="form-group">*/}
                         {/*    <label htmlFor="phone">טלפון נייד</label>*/}

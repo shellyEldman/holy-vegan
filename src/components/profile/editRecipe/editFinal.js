@@ -11,50 +11,50 @@ const storage = firebase.storage();
 const db = firebase.firestore();
 
 const MyModal = ({handleClose, modalShow, modalItem, modalIndex, instructions, setInstructions, modalGroup, ingredients, setIngredients}) => {
-  const [value, setValue] = useState('');
-  useEffect(() => {
-      if(modalItem) {
-          setValue(modalItem);
-      }
-  }, [modalItem]);
+    const [value, setValue] = useState('');
+    useEffect(() => {
+        if (modalItem) {
+            setValue(modalItem);
+        }
+    }, [modalItem]);
 
-  const handleSave = () => {
-      if (!modalGroup) {
-          let newInstructions = [...instructions];
-          newInstructions[Number(modalIndex)] = value;
-          setInstructions(newInstructions);
-          handleClose();
-      } else {
-          let newItems = [...ingredients[modalGroup].items];
-          newItems[modalIndex] = value;
-          const newIngredients = {...ingredients, [modalGroup]: {...ingredients[modalGroup], items: newItems}};
-          setIngredients(newIngredients);
-          handleClose();
-      }
-  };
+    const handleSave = () => {
+        if (!modalGroup) {
+            let newInstructions = [...instructions];
+            newInstructions[Number(modalIndex)] = value;
+            setInstructions(newInstructions);
+            handleClose();
+        } else {
+            let newItems = [...ingredients[modalGroup].items];
+            newItems[modalIndex] = value;
+            const newIngredients = {...ingredients, [modalGroup]: {...ingredients[modalGroup], items: newItems}};
+            setIngredients(newIngredients);
+            handleClose();
+        }
+    };
 
-  return(
-      <Modal className="modal" show={modalShow} onHide={handleClose}>
-          <Modal.Header>
-              <Modal.Title>ערוך הוראת הכנה</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-              <div className="form-group mt-5">
-                  <label htmlFor="editInstruction">הוראת הכנה:</label>
-                  <input value={value} onChange={(e) => setValue(e.target.value)} type="text"
-                         className="form-control" id="editInstruction"/>
-              </div>
-          </Modal.Body>
-          <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                  סגור
-              </Button>
-              <Button className="mx-3" variant="primary" onClick={handleSave}>
-                  שמור שינויים
-              </Button>
-          </Modal.Footer>
-      </Modal>
-  );
+    return (
+        <Modal className="modal" show={modalShow} onHide={handleClose}>
+            <Modal.Header>
+                <Modal.Title>ערוך הוראת הכנה</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+                <div className="form-group mt-5">
+                    <label htmlFor="editInstruction">הוראת הכנה:</label>
+                    <input value={value} onChange={(e) => setValue(e.target.value)} type="text"
+                           className="form-control" id="editInstruction"/>
+                </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    סגור
+                </Button>
+                <Button className="mx-3" variant="primary" onClick={handleSave}>
+                    שמור שינויים
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    );
 };
 
 const EditFinal = ({recipe, history, id}) => {
@@ -169,7 +169,8 @@ const EditFinal = ({recipe, history, id}) => {
                 <span key={i}>{item}</span>
                 <button onClick={() => handleRemoveIngredient(item, group)} className="btn btn-sm btn-danger mx-2">הסר
                 </button>
-                <button onClick={() => handleEditIngredients(item, i, group)} className="btn btn-sm btn-warning mx-2">ערוך
+                <button onClick={() => handleEditIngredients(item, i, group)}
+                        className="btn btn-sm btn-warning mx-2">ערוך
                 </button>
             </div>)
         });
@@ -264,8 +265,32 @@ const EditFinal = ({recipe, history, id}) => {
                         })
                             .then(function () {
                                 console.log("Document successfully written!");
-                                setLoading(false);
-                                history.push('/');
+                                db.collection('recipesNames').doc('names').get()
+                                    .then(querySnapshot => {
+                                        const namesId = [...querySnapshot.data().names];
+                                        const changed = namesId.map(item => {
+                                            if (item.id === id) {
+                                                return {
+                                                    id: id,
+                                                    name: recipeName
+                                                };
+                                            } else {
+                                                return item;
+                                            }
+                                        });
+                                        db.collection('recipesNames').doc('names').set({
+                                            names: changed
+                                        }).then(() => {
+                                            setLoading(false);
+                                            history.push('/');
+                                            console.log('successfully updated names');
+                                        }).catch(() => {
+                                            console.log('error updated names');
+                                        });
+                                    })
+                                    .catch(function (error) {
+                                        console.log("Error getting documents: ", error);
+                                    });
                             })
                             .catch(function (error) {
                                 console.error("Error writing document: ", error);
@@ -287,8 +312,32 @@ const EditFinal = ({recipe, history, id}) => {
                 })
                     .then(function () {
                         console.log("Document successfully written!");
-                        setLoading(false);
-                        history.push('/');
+                        db.collection('recipesNames').doc('names').get()
+                            .then(querySnapshot => {
+                                const namesId = [...querySnapshot.data().names];
+                                const changed = namesId.map(item => {
+                                    if (item.id === id) {
+                                        return {
+                                            id: id,
+                                            name: recipeName
+                                        };
+                                    } else {
+                                        return item;
+                                    }
+                                });
+                                db.collection('recipesNames').doc('names').set({
+                                    names: changed
+                                }).then(() => {
+                                    setLoading(false);
+                                    history.push('/');
+                                    console.log('successfully updated names');
+                                }).catch(() => {
+                                    console.log('error updated names');
+                                });
+                            })
+                            .catch(function (error) {
+                                console.log("Error getting documents: ", error);
+                            });
                     })
                     .catch(function (error) {
                         console.error("Error writing document: ", error);
@@ -301,23 +350,38 @@ const EditFinal = ({recipe, history, id}) => {
 
     const handleDeleteRecipe = () => {
         setLoading(true);
-        db.collection("recipes").doc(id).delete().then(function() {
+        db.collection("recipes").doc(id).delete().then(function () {
             console.log("Document successfully deleted!");
-            storage.ref('recipes').child(id).delete().then(function() {
+            storage.ref('recipes').child(id).delete().then(function () {
                 // File deleted successfully
                 console.log("image successfully deleted!");
-                setLoading(false);
-                history.push('/');
-            }).catch(function(error) {
+                db.collection('recipesNames').doc('names').get()
+                    .then(querySnapshot => {
+                        const namesId = [...querySnapshot.data().names];
+                        const filtered = namesId.filter(item => item.id !== id);
+                        db.collection('recipesNames').doc('names').set({
+                            names: filtered
+                        }).then(() => {
+                            setLoading(false);
+                            history.push('/');
+                            console.log('successfully updated names');
+                        }).catch(() => {
+                            console.log('error updated names');
+                        });
+                    })
+                    .catch(function (error) {
+                        console.log("Error getting documents: ", error);
+                    });
+            }).catch(function (error) {
                 // Uh-oh, an error occurred!
                 console.error("Error removing image from storage: ", error);
             });
-        }).catch(function(error) {
+        }).catch(function (error) {
             console.error("Error removing document: ", error);
         });
     };
 
-    return(
+    return (
         <div className="container mb-5">
             <h2>ערוך מתכון</h2>
             <div className="row addRecipe">
@@ -335,7 +399,8 @@ const EditFinal = ({recipe, history, id}) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="order">סדר</label>
-                            <input value={order} onChange={(e) => setOrder(Number(e.target.value))} type="number" className="form-control" id="order"/>
+                            <input value={order} onChange={(e) => setOrder(Number(e.target.value))} type="number"
+                                   className="form-control" id="order"/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="introduction">הקדמה</label>
@@ -443,7 +508,9 @@ const EditFinal = ({recipe, history, id}) => {
 
                         {displayInstructions()}
 
-                        <MyModal ingredients={ingredients} setIngredients={setIngredients} modalGroup={modalGroup} handleClose={handleClose} modalShow={modalShow} modalItem={modalItem} modalIndex={modalIndex} instructions={instructions} setInstructions={setInstructions}/>
+                        <MyModal ingredients={ingredients} setIngredients={setIngredients} modalGroup={modalGroup}
+                                 handleClose={handleClose} modalShow={modalShow} modalItem={modalItem}
+                                 modalIndex={modalIndex} instructions={instructions} setInstructions={setInstructions}/>
 
                         <div className="form-group">
                             <label htmlFor="instructions">הוראת הכנה</label>
@@ -463,7 +530,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="salad" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'salad')}/>
+                                    <input name="salad" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'salad')}/>
                                 </div>
                             </div>
                             <p className="form-control">ירקות וסלטים</p>
@@ -471,7 +539,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="burger" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'burger')}/>
+                                    <input name="burger" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'burger')}/>
                                 </div>
                             </div>
                             <p className="form-control">המבורגר וקציצות</p>
@@ -479,7 +548,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="pasta" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'pasta')}/>
+                                    <input name="pasta" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'pasta')}/>
                                 </div>
                             </div>
                             <p className="form-control">נודלס ופסטות</p>
@@ -487,7 +557,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="soup" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'soup')}/>
+                                    <input name="soup" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'soup')}/>
                                 </div>
                             </div>
                             <p className="form-control">מרקים</p>
@@ -495,7 +566,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="bakery" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'bakery')}/>
+                                    <input name="bakery" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'bakery')}/>
                                 </div>
                             </div>
                             <p className="form-control">לחם ומאפים</p>
@@ -503,7 +575,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="dessert" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'dessert')}/>
+                                    <input name="dessert" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'dessert')}/>
                                 </div>
                             </div>
                             <p className="form-control">קינוחים</p>
@@ -511,7 +584,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="breakfast" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'breakfast')}/>
+                                    <input name="breakfast" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'breakfast')}/>
                                 </div>
                             </div>
                             <p className="form-control">ארוחות בוקר</p>
@@ -519,7 +593,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="dinner" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'dinner')}/>
+                                    <input name="dinner" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'dinner')}/>
                                 </div>
                             </div>
                             <p className="form-control">מנות עיקריות</p>
@@ -527,7 +602,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="gluten" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'gluten')}/>
+                                    <input name="gluten" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'gluten')}/>
                                 </div>
                             </div>
                             <p className="form-control">ללא גלוטן</p>
@@ -535,7 +611,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="snack" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'snack')}/>
+                                    <input name="snack" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'snack')}/>
                                 </div>
                             </div>
                             <p className="form-control">חטיפים ונשנושים</p>
@@ -543,7 +620,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="smoothie" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'smoothie')}/>
+                                    <input name="smoothie" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'smoothie')}/>
                                 </div>
                             </div>
                             <p className="form-control">סמוזי ושייקים</p>
@@ -551,7 +629,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="rise" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'rise')}/>
+                                    <input name="rise" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'rise')}/>
                                 </div>
                             </div>
                             <p className="form-control">תבשילים ואורז</p>
@@ -559,7 +638,8 @@ const EditFinal = ({recipe, history, id}) => {
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
                                 <div className="input-group-text">
-                                    <input name="cheese" onChange={handleCheck} type="checkbox" checked={categories.find((c) => c === 'cheese')}/>
+                                    <input name="cheese" onChange={handleCheck} type="checkbox"
+                                           checked={categories.find((c) => c === 'cheese')}/>
                                 </div>
                             </div>
                             <p className="form-control">גבינות</p>
@@ -592,46 +672,57 @@ const EditFinal = ({recipe, history, id}) => {
                             <p>{introduction}</p>
                             <h4 className="font-weight-bolder">מרכיבים</h4>
 
-                            {ingredients['1'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['1'].title}</p>}
+                            {ingredients['1'].title &&
+                            <p className="mb-2 mt-3 font-weight-bolder">{ingredients['1'].title}</p>}
                             <ul className="list-group list-group-flush border-none">
                                 {ingredients['1'].title && ingredients['1'].items.map((item, i) => {
-                                    return(
-                                        <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['1'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                    return (
+                                        <li key={i}
+                                            className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['1'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                            <i
+                                                className="fas fa-circle mr-2"/><span>{item}</span></li>
                                     )
                                 })}
                             </ul>
 
-                            {ingredients['2'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['2'].title}</p>}
+                            {ingredients['2'].title &&
+                            <p className="mb-2 mt-3 font-weight-bolder">{ingredients['2'].title}</p>}
                             <ul className="list-group list-group-flush border-none">
                                 {ingredients['2'].title && ingredients['2'].items.map((item, i) => {
-                                    return(
-                                        <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['2'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                    return (
+                                        <li key={i}
+                                            className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['2'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                            <i
+                                                className="fas fa-circle mr-2"/><span>{item}</span></li>
                                     )
                                 })}
                             </ul>
 
-                            {ingredients['3'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['3'].title}</p>}
+                            {ingredients['3'].title &&
+                            <p className="mb-2 mt-3 font-weight-bolder">{ingredients['3'].title}</p>}
                             <ul className="list-group list-group-flush border-none">
                                 {ingredients['3'].title && ingredients['3'].items.map((item, i) => {
-                                    return(
-                                        <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['3'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                    return (
+                                        <li key={i}
+                                            className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['3'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                            <i
+                                                className="fas fa-circle mr-2"/><span>{item}</span></li>
                                     )
                                 })}
                             </ul>
 
-                            {ingredients['4'].title &&  <p className="mb-2 mt-3 font-weight-bolder">{ingredients['4'].title}</p>}
+                            {ingredients['4'].title &&
+                            <p className="mb-2 mt-3 font-weight-bolder">{ingredients['4'].title}</p>}
                             <ul className="list-group list-group-flush border-none">
                                 {ingredients['4'].title && ingredients['2'].items.map((item, i) => {
-                                    return(
-                                        <li key={i} className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['4'].items.length-1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}><i
-                                            className="fas fa-circle mr-2"/><span>{item}</span></li>
+                                    return (
+                                        <li key={i}
+                                            className={`list-group-item bg-light ${i === 0 ? 'border-top-0' : i === ingredients['4'].items.length - 1 ? 'border-bottom-0' : ''} py-1 d-flex align-items-center`}>
+                                            <i
+                                                className="fas fa-circle mr-2"/><span>{item}</span></li>
                                     )
                                 })}
                             </ul>
-
 
 
                             <button className="btn btn-success btn-block mt-3"><span>רכישת מוצרים עבור מתכון זה</span><i
@@ -640,9 +731,9 @@ const EditFinal = ({recipe, history, id}) => {
                             <h4 className="font-weight-bolder mt-4">הוראות הכנה</h4>
                             <ul className="list-group list-group-flush border-none">
                                 {instructions.map((item, i) => {
-                                    return(
+                                    return (
                                         <li key={i} className="bg-light py-1 d-flex align-items-start"><span
-                                            className="mr-2 font-weight-bolder">{i+1}.</span><span>{item}</span>
+                                            className="mr-2 font-weight-bolder">{i + 1}.</span><span>{item}</span>
                                         </li>
                                     )
                                 })}

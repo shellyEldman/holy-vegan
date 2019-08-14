@@ -9,10 +9,11 @@ import EditRecipe from './editRecipe/editRecipe';
 import CommentsToApprove from './commentsToApprove';
 import RecipesIngredients from './addRecipeIngredients/recipesIngredients';
 import EditItem from './editItem/editItem';
+import Favor from './favor';
 import UserProfile from './userProfile';
 
 const Profile = ({auth, profile, signOut, history}) => {
-    const [category, setCategory] = useState('user');
+    const [category, setCategory] = useState('favor');
     const [categoryName, setCategoryName] = useState('פרופיל משתמש');
     const [open, setOpen] = useState(false);
 
@@ -66,18 +67,22 @@ const Profile = ({auth, profile, signOut, history}) => {
 
     return (
         <div className="profile row mx-0 p-0 bg-light" style={{'marginTop': '68px'}}>
-            <div className="col-lg-2 choose-profile-items d-none d-lg-inline border-right shadow-sm m-0 p-0">
-                <div className="categories-lg mt-3">
+            <div className="col-lg-2 bg-light position-fixed choose-profile-items d-none d-lg-inline border-right shadow-sm m-0 p-0">
+                <div className="categories-lg mt-3 bg-light">
+                    <div onClick={() => setCategory('favor')}
+                         className={`${category === 'favor' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>מתכונים מועדפים
+                    </div>
                     <div onClick={() => setCategory('user')}
                          className={`${category === 'user' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>פרופיל
                         משתמש
                     </div>
-                    {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div onClick={() => setCategory('history')}
-                                                                         className={`${category === 'history' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>היסטוריית
-                        קניות
-                    </div>}
+
 
                     {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>
+                        <div onClick={() => setCategory('history')}
+                             className={`${category === 'history' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>היסטוריית
+                            קניות
+                        </div>
                         <div onClick={() => setCategory('add')}
                              className={`${category === 'add' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>הוספת
                             מוצרים
@@ -109,7 +114,7 @@ const Profile = ({auth, profile, signOut, history}) => {
 
 
 
-            <div className="col-lg-10 user-profile mt-3">
+            <div className="col-lg-10 user-profile mt-3 bg-light">
                 <div className="container">
                     <h3 onClick={() => setOpen(!open)} className="text-center text-dark d-lg-none"
                         style={{'cursor': 'pointer'}} data-toggle="collapse" data-target="#collapseOne">
@@ -117,19 +122,20 @@ const Profile = ({auth, profile, signOut, history}) => {
                         className={`fas ${open ? 'fa-chevron-up' : 'fa-chevron-down'} ml-2`}/></h3>
                     <ul onClick={() => setOpen(!open)} id="collapseOne"
                         className="list-group text-dark collapse mb-3 d-lg-none">
-                        <div onClick={() => handleSelectCategory('user')} data-toggle="collapse"
-                             data-target="#collapseOne"
-                             className={`pb-1 pt-1 border-bottom list-group-item ${category === 'user' ? 'text-light bg-success' : ''}`}
-                             style={{'cursor': 'pointer'}}>פרופיל משתמש
-                        </div>
                         <div onClick={() => handleSelectCategory('favor')} data-toggle="collapse"
                              data-target="#collapseOne"
                              className={`py-1 border-bottom list-group-item ${category === 'favor' ? 'text-light bg-success' : ''}`}
                              style={{'cursor': 'pointer'}}>מתכונים מועדפים
                         </div>
+                        <div onClick={() => handleSelectCategory('user')} data-toggle="collapse"
+                             data-target="#collapseOne"
+                             className={`pb-1 pt-1 border-bottom list-group-item ${category === 'user' ? 'text-light bg-success' : ''}`}
+                             style={{'cursor': 'pointer'}}>פרופיל משתמש
+                        </div>
                     </ul>
 
-                    <div className="mt-3">
+                    <div className="mt-3 mt-lg-0 bg-light">
+                        {category === 'favor' && <Favor/>}
                         {category === 'user' && <UserProfile profile={profile} handleSignOut={handleSignOut}/>}
 
                         {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>
