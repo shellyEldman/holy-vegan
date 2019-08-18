@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Link, Redirect} from "react-router-dom";
 import './auth.scss';
 import {connect} from "react-redux";
@@ -12,6 +12,13 @@ const Register = ({signUp, loading, authError, auth}) => {
     const [passwordLengthError, setPasswordLengthError] = useState(false);
     const [emailInvalid, setEmailInvalid] = useState(false);
     const [userInvalid, setUserInvalid] = useState(false);
+    const [authErrorMessage, setAuthErrorMessage] = useState('שגיאה');
+
+    useEffect(() => {
+        if (authError === 'auth/email-already-in-use') {
+            setAuthErrorMessage('כתובת הדוא"ל כבר נמצאת בשימוש על ידי חשבון אחר.');
+        }
+    }, [authError]);
 
     const handleUserName = (e) => {
         setUserName(e.target.value);
@@ -117,6 +124,7 @@ const Register = ({signUp, loading, authError, auth}) => {
                                    value={password} onChange={handlePassword}/>
                             {passwordLengthError &&
                             <small className="text-danger">הסיסמה צריכה להכיל בין 6-12 תוים.</small>}
+                            {authError && <small className="text-danger">{authErrorMessage}</small>}
                         </div>
                     {/*</div>*/}
 
@@ -163,7 +171,6 @@ const Register = ({signUp, loading, authError, auth}) => {
                             {!loading && <div>הרשם</div>}
                             {loading && <div className="spinner-border spinner-border-sm" role="status"/>}
                         </button>
-                        {authError && <small className="text-danger">auth error</small>}
                     {/*</div>*/}
                 {/*</div>*/}
             </form>

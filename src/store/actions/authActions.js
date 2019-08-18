@@ -38,7 +38,7 @@ export const signUp = (newUser) => {
                 email: newUser.email
             });
         }).catch((err) => {
-            dispatch({type: 'SIGNUP_ERROR', err});
+            dispatch({type: 'SIGNUP_ERROR', err: err.code});
             dispatch({type: 'STOP_LOADING'});
         });
     };

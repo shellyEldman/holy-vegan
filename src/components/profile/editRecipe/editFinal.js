@@ -93,6 +93,8 @@ const EditFinal = ({recipe, history, id}) => {
     const [insta, setInsta] = useState('');
     const [comments, setComments] = useState([]);
     const [recipeIngredients, setRecipeIngredients] = useState([]);
+    const [views, setViews] = useState(0);
+    const [otherRecipes, setOtherRecipes] = useState([]);
 
     const [loading, setLoading] = useState(false);
     const [modalShow, setModalShow] = useState(false);
@@ -121,6 +123,12 @@ const EditFinal = ({recipe, history, id}) => {
             setComments(recipe.comments);
             if (recipe.buyRecipeIngredients) {
                 setRecipeIngredients(recipe.buyRecipeIngredients);
+            }
+            if (recipe.views) {
+                setViews(recipe.views);
+            }
+            if (recipe.otherRecipes) {
+                setOtherRecipes(recipe.otherRecipes);
             }
         }
     }, [recipe]);
@@ -261,6 +269,8 @@ const EditFinal = ({recipe, history, id}) => {
                             insta,
                             order,
                             comments,
+                            views,
+                            otherRecipes,
                             buyRecipeIngredients: recipeIngredients
                         })
                             .then(function () {
@@ -308,6 +318,8 @@ const EditFinal = ({recipe, history, id}) => {
                     insta,
                     order,
                     comments,
+                    views,
+                    otherRecipes,
                     buyRecipeIngredients: recipeIngredients
                 })
                     .then(function () {

@@ -2,9 +2,10 @@ import React, {useState} from 'react';
 import "./contact.scss";
 import firebase from "../../config/fbConfig";
 import {Helmet} from "react-helmet";
+import {connect} from "react-redux";
 const db = firebase.firestore();
 
-const Contact = () => {
+const Contact = ({profile, auth}) => {
     const [name, setName] = useState('');
     const [topic, setTopic] = useState('');
     const [phone, setPhone] = useState('');
@@ -124,4 +125,12 @@ const Contact = () => {
     );
 };
 
-export default Contact;
+
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth,
+        profile: state.firebase.profile
+    };
+};
+
+export default connect(mapStateToProps)(Contact);

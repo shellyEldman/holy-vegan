@@ -7,74 +7,11 @@ import firebase from "../../config/fbConfig";
 
 const db = firebase.firestore().collection("recipes");
 
-const Recipes = ({match, history, category, setCategory, searchField, setSearchField}) => {
+const Recipes = ({myElement, picked, setPicked, notFound, setNotFound, endReached, setEndReached, recipes, setRecipes, lastVisible, setLastVisible, category, setCategory, searchField, setSearchField, handleCategoryClick}) => {
     const [searchBy, setSearchBy] = useState('recipe');
     const [searchByName, setSearchByName] = useState('חפש לפי מתכון');
     const [recipeNames, setRecipeNames] = useState([]);
-    const [picked, setPicked] = useState(false);
     const [recipesPlusId, setRecipesPlusId] = useState([]);
-    const [recipes, setRecipes] = useState([]);
-    const [endReached, setEndReached] = useState(false);
-    const [lastVisible, setLastVisible] = useState('');
-    const [notFound, setNotFound] = useState(false);
-
-    const myElement = document.getElementById('scrollDiv');   /* col-lg-10 */
-
-    const handleCategoryClick = (newCategory) => {
-        setPicked(false);
-        setNotFound(false);
-        if (newCategory === category) {
-            setEndReached(false);
-            setRecipes([]);
-            if (myElement) {
-                myElement.scrollTo(0, 0);
-                window.scrollTo(0, 0);
-            }
-
-            let rec = [];
-
-            if (category !== 'all') {
-                db.where("categories", "array-contains", category).orderBy('order', 'desc').limit(12).get()
-                    .then(querySnapshot => {
-                        const myLast = querySnapshot.docs[querySnapshot.docs.length - 1];
-                        if (myLast) {
-                            setLastVisible(myLast);
-                            querySnapshot.forEach((doc) => {
-                                rec.push({...doc.data(), id: doc.id});
-                            });
-                            setRecipes(rec);
-                        } else {
-                            setEndReached(true);
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log("Error getting documents: ", error);
-                    });
-            } else {
-                db.orderBy('order', 'desc').limit(12).get()
-                    .then(querySnapshot => {
-                        const myLast = querySnapshot.docs[querySnapshot.docs.length - 1];
-                        if (myLast) {
-                            setLastVisible(myLast);
-                            querySnapshot.forEach((doc) => {
-                                rec.push({...doc.data(), id: doc.id});
-                            });
-                            setRecipes(rec);
-                        } else {
-                            setEndReached(true);
-                        }
-                    })
-                    .catch(function (error) {
-                        console.log("Error getting documents: ", error);
-                    });
-            }
-        }
-        setSearchField('');
-        setCategory(newCategory);
-        if (!match.isExact) {
-            history.push('/recipes');
-        }
-    };
 
     const handleRecipePick = (recipePickName) => {
         setPicked(true);

@@ -3,16 +3,20 @@ import {Switch, Route, Link} from 'react-router-dom';
 import Recipe from './recipe';
 import {connect} from "react-redux";
 import firebase from "../../config/fbConfig";
+import {Button, Modal} from "react-bootstrap";
+import { withRouter } from "react-router-dom";
+import {compose} from "redux";
 
 const dbUsers = firebase.firestore().collection('users');
 const dbNames = firebase.firestore().collection("recipesNames");
 const db = firebase.firestore().collection("recipes");
 const VisibilitySensor = require('react-visibility-sensor').default;
 
-const RecipesItems = ({auth, profile, notFound, handleCategoryClick, lastVisible, setLastVisible, myElement, endReached, setEndReached, recipes, setRecipes, setRecipesPlusId, recipeNames, setRecipeNames, handleRecipePick, picked, setPicked, category, searchField, setSearchField, searchBy, setSearchBy}) => {
+const RecipesItems = ({auth, history, profile, notFound, handleCategoryClick, lastVisible, setLastVisible, myElement, endReached, setEndReached, recipes, setRecipes, setRecipesPlusId, recipeNames, setRecipeNames, handleRecipePick, picked, setPicked, category, searchField, setSearchField, searchBy, setSearchBy}) => {
     const [categoryName, setCategoryName] = useState('כל המתכונים');
     const [open, setOpen] = useState(false);
     const [fav, setFav] = useState([]);
+    const [show, setShow] =useState(false);
 
     useEffect(() => {
         if (profile && profile.isLoaded) {
@@ -180,31 +184,39 @@ const RecipesItems = ({auth, profile, notFound, handleCategoryClick, lastVisible
         }
     };
 
+    const handleClose = () => {
+        setShow(false);
+    };
+
     const handleAddFav = (e, id) => {
         e.stopPropagation();
-        dbUsers.doc(auth.uid).get()
-            .then((doc) => {
-                let fav = [];
-                if (doc.data().fav) {
-                    fav = [...doc.data().fav, id];
-                } else {
-                    fav.push(id);
-                }
-                const newData = {
-                    ...doc.data(),
-                    fav
-                };
-                dbUsers.doc(auth.uid).set({
-                    ...newData
-                }).then(() => {
-                    console.log('user saved!');
-                }).catch((err) => {
-                    console.log('error saving user..', err);
+        if (auth.uid) {
+            dbUsers.doc(auth.uid).get()
+                .then((doc) => {
+                    let fav = [];
+                    if (doc.data().fav) {
+                        fav = [...doc.data().fav, id];
+                    } else {
+                        fav.push(id);
+                    }
+                    const newData = {
+                        ...doc.data(),
+                        fav
+                    };
+                    dbUsers.doc(auth.uid).set({
+                        ...newData
+                    }).then(() => {
+                        console.log('user saved!');
+                    }).catch((err) => {
+                        console.log('error saving user..', err);
+                    });
+                })
+                .catch((err) => {
+                    console.log('no such user', err);
                 });
-            })
-            .catch((err) => {
-                console.log('no such user', err);
-            });
+        } else {
+            setShow(true);
+        }
     };
 
     const handleRemoveFav = (e, id) => {
@@ -384,6 +396,19 @@ const RecipesItems = ({auth, profile, notFound, handleCategoryClick, lastVisible
                             {notFound && <p className="container">מתכון לא נמצא..</p>}
                         </div>
 
+                        <Modal dir="rtl" show={show} onHide={handleClose}>
+                            <Modal.Body dir="rtl">
+                                <React.Fragment>
+                                    <h4>מתכונים מועדפים</h4>
+                                    <p onClick={() => history.push('/login')} className="mb-0"> יש צורך להתחבר למערכת לשמירת מתכונים מועדפים,<span style={{'cursor': 'pointer'}} className="mx-1 text-success">התחבר כאן!</span></p>
+                                </React.Fragment>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    סגור
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
 
                         {recipes.length > 0 && !endReached && <VisibilitySensor onChange={onChangeVisibility}>
                             <div className="d-flex justify-content-center mb-3 text-dark">
@@ -408,7 +433,6 @@ const RecipesItems = ({auth, profile, notFound, handleCategoryClick, lastVisible
                         </div>}
 
                     </React.Fragment>}/>
-                    <Route path="/recipes/id/:id" component={Recipe}/>
                     <Route path="/recipes/:id" component={Recipe}/>
                 </Switch>
             </div>
@@ -423,4 +447,7 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(RecipesItems);
+export default compose(
+    connect(mapStateToProps),
+    withRouter
+)(RecipesItems);

@@ -158,11 +158,11 @@
   }
 
   .recipe {
-    margin-bottom: 170px;
+    //margin-bottom: 170px;
     // Large devices (desktops, 992px and up)
-    @media (min-width: 992px) {
-      margin-bottom: 70px;
-    }
+    //@media (min-width: 992px) {
+    //  margin-bottom: 70px;
+    //}
 
     .fa-arrow-right {
       font-size: 14px;
@@ -194,6 +194,10 @@
 
     .fa-user-circle {
       font-size: 27px;
+    }
+
+    .fa-carrot {
+      color: orange;
     }
 
   }
