@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a187cca-9a47-4d2c-b7e7-fd548b96247d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/components/JoinAsCooker.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/JoinAsCooker.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/formActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/formActions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/shop/items.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/shop/items.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -89,8 +88,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/shop/items.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="77">
-              <caret line="59" column="26" lean-forward="true" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+            <state relative-caret-position="103">
+              <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -190,6 +189,7 @@
         <option value="$PROJECT_DIR$/src/store/actions/authActions.js" />
         <option value="$PROJECT_DIR$/src/store/actions/formActions.js" />
         <option value="$PROJECT_DIR$/src/components/JoinAsCooker.js" />
+        <option value="$PROJECT_DIR$/src/components/shop/items.js" />
       </list>
     </option>
   </component>
@@ -311,15 +311,16 @@
       <workItem from="1565768131739" duration="1269000" />
       <workItem from="1566122497027" duration="366000" />
       <workItem from="1566895957654" duration="256000" />
-      <workItem from="1567354501345" duration="15413000" />
+      <workItem from="1567354501345" duration="15515000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="113498000" />
+    <option name="totallyTimeSpent" value="113600000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="21" y="23" width="1412" height="877" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.17541337" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -713,8 +714,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/shop/items.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="77">
-          <caret line="59" column="26" lean-forward="true" selection-start-line="59" selection-start-column="26" selection-end-line="59" selection-end-column="26" />
+        <state relative-caret-position="103">
+          <caret line="5" column="18" lean-forward="true" selection-start-line="5" selection-start-column="18" selection-end-line="5" selection-end-column="18" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>

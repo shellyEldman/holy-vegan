@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import Item from './item';
 import {firestoreConnect} from "react-redux-firebase";
 import {compose} from "redux";
-
+//ran ya rosh tuna
 const Items = ({items, itemCategory, setItemCategory, itemSearchField, setItemSearchField, picked, setPicked, categoryName, itemsNames, setItemsNames, handleItemPick}) => {
     const [open, setOpen] = useState(false);
 
