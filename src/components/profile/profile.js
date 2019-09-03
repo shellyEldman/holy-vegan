@@ -142,7 +142,7 @@ const Profile = ({auth, profile, signOut, history}) => {
 
                     <div className="mt-3 mt-lg-0 bg-light">
                         {category === 'favor' && <Favor/>}
-                        {category === 'cooker' && <JoinAsCooker profile={profile}/>}
+                        {category === 'cooker' && <JoinAsCooker profile={profile} auth={auth}/>}
                         {category === 'user' && <UserProfile profile={profile} handleSignOut={handleSignOut}/>}
 
                         {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>

@@ -84,7 +84,6 @@ const Register = ({signUp, loading, authError, auth}) => {
     return (
         <div className="login d-flex flex-column align-items-center" style={{'marginTop': '68px'}}>
             <h3 className="text-success mt-3">טופס הרשמה</h3>
-
             <form onSubmit={handleSubmit} className="mt-3 border rounded shadow px-3 py-3">
                 {/*<div className="row">*/}
                     {/*<div className="col-12 col-lg-6">*/}
