@@ -1,11 +1,12 @@
-export const send = (user,data) => {
+export const sendForm = (user,data) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
         const firestore = getFirestore();
         firestore.collection('users').add({
-        data
-        }).then(res => console.log(res))}
-
+            data
+        }).then(res => console.log(res))
+            .catch(err=>console.log(err))
+    }};
 
 
 

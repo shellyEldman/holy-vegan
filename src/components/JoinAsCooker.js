@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import {connect} from "react-redux";
+import {signUp} from "../store/actions/authActions";
+import {sendForm} from '../store/actions/formActions'
+
 
 const JoinAsCooker = ({profile,auth}) => {
     const [userName, setUserName] = useState('');
@@ -10,10 +13,20 @@ const JoinAsCooker = ({profile,auth}) => {
     {console.log(profile)}
     {console.log(auth)}
 
+    const handleSubmit = (e)=> {
+        e.preventDefault()
+        const data = {
+            userName,
+            email
+        }
+    sendForm(data)
+    };
+
+
     return (
         <div className="row">
             <div className="col-12 p-lg-5">
-                <form>
+                <form onSubmit={(e)=> handleSubmit}>
                     <div className="row">
                         {/*right side*/}
                         <div className="col-6">
@@ -134,8 +147,9 @@ const JoinAsCooker = ({profile,auth}) => {
                             </div>
                     </div>
                     </div>
+                    <button className="btn btn-success btn-block" type="submit">שלח</button>
                 </form>
-                <button className="btn btn-success btn-block">שלח</button>
+
             </div>
         </div>
     );
@@ -148,4 +162,10 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, null)(JoinAsCooker);
+const mapDispatchToProps = (dispatch) => {
+    return {
+        sendForm : (auth,data)=> dispatch(sendForm(auth,data))
+    };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(JoinAsCooker);
