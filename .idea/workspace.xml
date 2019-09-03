@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6a187cca-9a47-4d2c-b7e7-fd548b96247d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/profile/favor.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" beforeDir="false" afterPath="$PROJECT_DIR$/.firebase/hosting.YnVpbGQ.cache" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/JoinAsCooker.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/auth/auth.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/auth.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/auth/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/auth/register.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/auth/register.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/navbar/navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/navbar/navbar.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/editRecipe/editFinal.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/editRecipe/editFinal.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/profile/profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/profile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/profile/profile.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/profile/profile.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/recipes/recipe.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recipes/recipe.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/recipes/recipesItems.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/recipes/recipesItems.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/actions/authActions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/actions/authActions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/reducers/authReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/reducers/authReducer.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -29,10 +19,31 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/components/recipes/recipe.js">
+        <entry file="file://$PROJECT_DIR$/src/components/profile/userProfile.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="248" column="37" selection-start-line="248" selection-start-column="37" selection-end-line="248" selection-end-column="37" />
+            <state relative-caret-position="374">
+              <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/App.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="303">
+              <caret line="33" column="45" lean-forward="true" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
+              <folding>
+                <element signature="e#0#38#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/components/profile/profile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -41,14 +52,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/components/recipes/recipes.scss">
+        <entry file="file://$PROJECT_DIR$/src/components/JoinAsCooker.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-              <folding>
-                <element signature="e#2200#2771#0" />
-                <marker date="1565450979177" expanded="true" signature="2034:2121" ph="..." />
-              </folding>
+            <state relative-caret-position="707">
+              <caret line="49" column="34" lean-forward="true" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -83,6 +90,11 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
@@ -110,16 +122,17 @@
         <option value="$PROJECT_DIR$/src/store/actions/authActions.js" />
         <option value="$PROJECT_DIR$/src/components/auth/auth.scss" />
         <option value="$PROJECT_DIR$/src/components/auth/login.js" />
-        <option value="$PROJECT_DIR$/src/components/profile/profile.js" />
         <option value="$PROJECT_DIR$/src/components/recipes/recipe.js" />
+        <option value="$PROJECT_DIR$/src/components/profile/profile.js" />
+        <option value="$PROJECT_DIR$/src/components/JoinAsCooker.js" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="6" />
-    <option name="y" value="36" />
-    <option name="width" value="1890" />
-    <option name="height" value="930" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="20" />
+    <option name="y" value="33" />
+    <option name="width" value="1412" />
+    <option name="height" value="846" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -152,7 +165,7 @@
               <item name="holy-vegan" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="recipes" type="462c0819:PsiDirectoryNode" />
+              <item name="profile" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -164,7 +177,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../module2-exercises/task_manager_api" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -204,17 +217,19 @@
       <workItem from="1565446080669" duration="20861000" />
       <workItem from="1565706832745" duration="1065000" />
       <workItem from="1565768131739" duration="1269000" />
+      <workItem from="1566122497027" duration="366000" />
+      <workItem from="1566895957654" duration="256000" />
+      <workItem from="1567354501345" duration="5408000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="97463000" />
+    <option name="totallyTimeSpent" value="103493000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
+    <frame x="20" y="33" width="1412" height="846" extended-state="1" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20667727" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.21063983" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
@@ -228,7 +243,8 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Terminal" order="10" weight="0.3339254" />
+      <window_info anchor="bottom" id="Terminal" order="10" visible="true" weight="0.302168" />
+      <window_info anchor="bottom" id="Quokka" order="11" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -399,24 +415,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/profile/userProfile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="22" lean-forward="true" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/profile/favor.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="107">
-          <caret line="71" column="100" selection-start-line="71" selection-start-column="100" selection-end-line="71" selection-end-column="100" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-            <element signature="e#1444#2937#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/profile/profile.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="430">
@@ -445,13 +443,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/recipes/recipesItems.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/store/actions/authActions.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="187">
@@ -459,51 +450,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/auth/login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="481">
-          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/auth/auth.scss">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="24" column="19" selection-start-line="24" selection-start-column="19" selection-end-line="24" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/profile/profile.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="117">
-          <caret line="69" column="45" selection-start-line="69" selection-start-column="45" selection-end-line="69" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#49#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="33" column="45" lean-forward="true" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#38#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/recipes/recipes.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="16" lean-forward="true" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
-          <folding>
-            <element signature="e#2200#2771#0" />
-            <marker date="1565450979177" expanded="true" signature="2034:2121" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -517,13 +467,87 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/recipes/recipe.js">
+    <entry file="file://$PROJECT_DIR$/src/components/recipes/recipesItems.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="248" column="37" selection-start-line="248" selection-start-column="37" selection-end-line="248" selection-end-column="37" />
+        <state relative-caret-position="-6193">
+          <caret line="17" column="42" lean-forward="true" selection-start-line="17" selection-start-column="42" selection-end-line="17" selection-end-column="42" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/recipes/recipe.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-834">
+          <caret line="11" column="26" lean-forward="true" selection-start-line="11" selection-start-column="26" selection-end-line="11" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/recipes/recipes.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="10" column="16" selection-start-line="10" selection-start-column="16" selection-end-line="10" selection-end-column="16" />
+          <folding>
+            <element signature="e#2200#2771#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/auth/login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-204">
+          <caret line="36" column="23" selection-start-line="36" selection-start-column="23" selection-end-line="36" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/profile/favor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1785">
+          <caret line="85" column="40" selection-start-line="85" selection-start-column="39" selection-end-line="85" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="303">
+          <caret line="33" column="45" lean-forward="true" selection-start-line="33" selection-start-column="45" selection-end-line="33" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#38#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/JoinAsCooker.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="707">
+          <caret line="49" column="34" lean-forward="true" selection-start-line="49" selection-start-column="34" selection-end-line="49" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/profile/profile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="16" column="52" selection-start-line="16" selection-start-column="52" selection-end-line="16" selection-end-column="52" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/profile/userProfile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="21" column="18" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
         </state>
       </provider>
     </entry>

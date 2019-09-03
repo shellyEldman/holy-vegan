@@ -11,9 +11,10 @@ import RecipesIngredients from './addRecipeIngredients/recipesIngredients';
 import EditItem from './editItem/editItem';
 import Favor from './favor';
 import UserProfile from './userProfile';
+import JoinAsCooker from "../JoinAsCooker";
 
 const Profile = ({auth, profile, signOut, history}) => {
-    const [category, setCategory] = useState('favor');
+    const [category, setCategory] = useState('cooker');
     const [categoryName, setCategoryName] = useState('פרופיל משתמש');
     const [open, setOpen] = useState(false);
 
@@ -46,6 +47,8 @@ const Profile = ({auth, profile, signOut, history}) => {
             case 'favor':
                 setCategoryName('מתכונים מועדפים');
                 break;
+            case 'cooker':
+                setCategoryName('הצטרפות כבשלן');
             default:
                 setCategoryName('פרופיל משתמש');
         }
@@ -75,6 +78,9 @@ const Profile = ({auth, profile, signOut, history}) => {
                     <div onClick={() => setCategory('user')}
                          className={`${category === 'user' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>פרופיל
                         משתמש
+                    </div>
+                    <div onClick={() => setCategory('cooker')}
+                         className={`${category === 'cooker' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>הצטרפות כבשלן
                     </div>
 
 
@@ -136,6 +142,7 @@ const Profile = ({auth, profile, signOut, history}) => {
 
                     <div className="mt-3 mt-lg-0 bg-light">
                         {category === 'favor' && <Favor/>}
+                        {category === 'cooker' && <JoinAsCooker profile={profile}/>}
                         {category === 'user' && <UserProfile profile={profile} handleSignOut={handleSignOut}/>}
 
                         {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>
