@@ -11,11 +11,17 @@ import RecipesIngredients from './addRecipeIngredients/recipesIngredients';
 import EditItem from './editItem/editItem';
 import Favor from './favor';
 import UserProfile from './userProfile';
+import BusinessDetails from "./cookProfile/BusinessDetails";
 
 const Profile = ({auth, profile, signOut, history}) => {
     const [category, setCategory] = useState('favor');
     const [categoryName, setCategoryName] = useState('פרופיל משתמש');
     const [open, setOpen] = useState(false);
+
+    useEffect(() => {
+        console.log(profile.cook);
+        console.log(auth.uid);
+    })
 
     useEffect(() => {
         switch (category.toString()) {
@@ -46,6 +52,18 @@ const Profile = ({auth, profile, signOut, history}) => {
             case 'favor':
                 setCategoryName('מתכונים מועדפים');
                 break;
+            case 'businessDetails':
+                setCategoryName('פרטי עסק');
+                break;
+            case 'ordersToMake':
+                setCategoryName('הזמנות');
+                break;
+            case 'businessPage':
+                setCategoryName('דף עסק');
+                break;
+            case 'myRecipes':
+                setCategoryName('המתכונים שלי');
+                break;
             default:
                 setCategoryName('פרופיל משתמש');
         }
@@ -65,18 +83,54 @@ const Profile = ({auth, profile, signOut, history}) => {
         return <Redirect to="/"/>
     }
 
+    const cookMenu = () => {
+        if (profile.isLoaded) {
+            if (profile.cook.isCook) {
+                return (
+                    <div>
+                        <div
+                            onClick={() => setCategory('businessDetails')}
+                            className={`${category === 'businessDetails' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>פרטי
+                            עסק
+                        </div>
+                        <div
+                            onClick={() => setCategory('businessPage')}
+                            className={`${category === 'businessPage' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>דף
+                            עסק
+                        </div>
+                        <div
+                            onClick={() => setCategory('myRecipes')}
+                            className={`${category === 'myRecipes' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>המתכונים
+                            שלי
+                        </div>
+                        <div
+                            onClick={() => setCategory('ordersToMake')}
+                            className={`${category === 'ordersToMake' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>הזמנות
+                        </div>
+                    </div>
+                );
+            }
+        }
+
+        return null;
+    }
+
     return (
         <div className="profile row mx-0 p-0 bg-light" style={{'marginTop': '68px'}}>
-            <div className="col-lg-2 bg-light position-fixed choose-profile-items d-none d-lg-inline border-right shadow-sm m-0 p-0">
+            <div
+                className="col-lg-2 bg-light position-fixed choose-profile-items d-none d-lg-inline border-right shadow-sm m-0 p-0">
                 <div className="categories-lg mt-3 bg-light">
                     <div onClick={() => setCategory('favor')}
-                         className={`${category === 'favor' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>מתכונים מועדפים
+                         className={`${category === 'favor' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>מתכונים
+                        מועדפים
                     </div>
                     <div onClick={() => setCategory('user')}
                          className={`${category === 'user' ? 'bg-success text-light' : ''} px-2 py-1 mr-1 category-item`}>פרופיל
                         משתמש
                     </div>
 
+                    {/* menu options for cook profile*/}
+                    {cookMenu()}
 
                     {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>
                         <div onClick={() => setCategory('history')}
@@ -113,7 +167,6 @@ const Profile = ({auth, profile, signOut, history}) => {
             </div>
 
 
-
             <div className="col-lg-10 user-profile mt-3 bg-light">
                 <div className="container">
                     <h3 onClick={() => setOpen(!open)} className="text-center text-dark d-lg-none"
@@ -137,6 +190,10 @@ const Profile = ({auth, profile, signOut, history}) => {
                     <div className="mt-3 mt-lg-0 bg-light">
                         {category === 'favor' && <Favor/>}
                         {category === 'user' && <UserProfile profile={profile} handleSignOut={handleSignOut}/>}
+                        {category === 'businessDetails' && <BusinessDetails />}
+                        {category === 'ordersToMake' && <UserProfile />}
+                        {category === 'businessPage' && <UserProfile />}
+                        {category === 'myRecipes' && <UserProfile />}
 
                         {auth.uid === '031mY4FYP9gIo8UVjsiUkQXTO6H2' && <div>
                             {category === 'add' && <AddItems/>}
