@@ -1,39 +1,45 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {connect} from "react-redux";
 import {signUp} from "../store/actions/authActions";
 import {sendForm} from '../store/actions/formActions'
+import firebase from "../config/fbConfig";
 
+const db = firebase.firestore().collection("recipes");
 
 const JoinAsCooker = ({profile,auth}) => {
     const [userName, setUserName] = useState('');
+    const [nameOfCookPlace, setNameOfCookPlace] = useState('')
+    const [city, setCity]= useState('');
+    const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [aboutMe, setAboutMe] = useState('');
 
-
-    {console.log(profile)}
-    {console.log(auth)}
-
+// const loadUserName = ()=> {
+//     setUserName(profile.userName)
+// };
     const handleSubmit = (e)=> {
         e.preventDefault()
         const data = {
             userName,
             email
         }
-    sendForm(data)
+        console.log(data)
+        // sendForm(data)
     };
 
-
+    console.log(profile.userName)
     return (
         <div className="row">
             <div className="col-12 p-lg-5">
-                <form onSubmit={(e)=> handleSubmit}>
+                {/*<button onClick={loadUserName}> load data</button>*/}
+                <form onSubmit={(e)=> handleSubmit(e)}>
                     <div className="row">
                         {/*right side*/}
                         <div className="col-6">
                     <div className="form-group">
                         <label htmlFor="userNameProfile"><span>שם מלא</span></label>
                         <input type="text" className="form-control" id="userNameProfile"
-                               placeholder={profile.userName}/>
+                               placeholder={userName} onChange={(e)=> setUserName(e.target.value)}/>
                     </div>
                     <div className="form-group">
                         <label htmlFor="userNameProfile"><span>שם העסק\בשלן</span></label>
