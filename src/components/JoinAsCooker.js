@@ -4,7 +4,7 @@ import {signUp} from "../store/actions/authActions";
 import {sendForm} from '../store/actions/formActions'
 import firebase from "../config/fbConfig";
 
-const db = firebase.firestore().collection("recipes");
+const db = firebase.firestore().collection('users');
 
 const JoinAsCooker = ({profile,auth}) => {
     const [userName, setUserName] = useState('');
@@ -42,6 +42,9 @@ const JoinAsCooker = ({profile,auth}) => {
             closingHour}
         }
         console.log(data)
+        db.doc(auth.uid).update({
+            "cook.details":data
+        }).then(()=> console.log('docoment updated'))
         // sendForm(data)
     };
 
@@ -52,7 +55,10 @@ const JoinAsCooker = ({profile,auth}) => {
             ...updateState, [newDay]:!updateState[newDay]
         }))
     }
-
+    // {console.log(profile)}
+    // {console.log(auth.uid)}
+    // {console.log(db.doc(auth.uid).get().then(doc => console.log(doc.data())))}
+    //
 
     const daysCheckBox = days.map(day =>
         <div className="form-check form-check-inline" key={day.id}>
@@ -89,36 +95,6 @@ const JoinAsCooker = ({profile,auth}) => {
                             <div className="form-checkbox-days">
                             <legend>ימים פעילים</legend>
                                 {daysCheckBox}
-                    {/*<div className="form-check form-check-inline">*/}
-                    {/*    <input className="form-check-input" type="checkbox" id="day1"*/}
-                    {/*           defaultChecked={openingDays.day1}/>*/}
-                    {/*        <label className="form-check-label" htmlFor="day1">ראשון</label>*/}
-                    {/*</div>*/}
-                    {/*<div className="form-check form-check-inline">*/}
-                    {/*    <input className="form-check-input" type="checkbox" id="day2"*/}
-                    {/*           value="day2"/>*/}
-                    {/*        <label className="form-check-label" htmlFor="day2">שני</label>*/}
-                    {/*</div>*/}
-                    {/*<div className="form-check form-check-inline">*/}
-                    {/*    <input className="form-check-input" type="checkbox" id="day3"*/}
-                    {/*           value="day3"/>*/}
-                    {/*    <label className="form-check-label" htmlFor="day3">שלישי</label>*/}
-                    {/*</div>*/}
-                    {/*<div className="form-check form-check-inline">*/}
-                    {/*    <input className="form-check-input" type="checkbox" id="day4"*/}
-                    {/*           value="day4"/>*/}
-                    {/*    <label className="form-check-label" htmlFor="day4">רביעי</label>*/}
-                    {/*</div>*/}
-                    {/*<div className="form-check form-check-inline">*/}
-                    {/*    <input className="form-check-input" type="checkbox" id="day5"*/}
-                    {/*           value="day5"/>*/}
-                    {/*    <label className="form-check-label" htmlFor="day5">חמישי</label>*/}
-                    {/*</div>*/}
-                    {/*<div className="form-check form-check-inline">*/}
-                    {/*    <input className="form-check-input" type="checkbox" id="day6"*/}
-                    {/*           value="day6"/>*/}
-                    {/*    <label className="form-check-label" htmlFor="day6">שישי</label>*/}
-                    {/*</div>*/}
                                 <div className="row mt-3 mb-3">
                                     <div className="col-6">
                                     <select className="custom-select opening-hours" name="opening-hours" onChange={(e)=> setOpeningHour(e.target.value)}>
