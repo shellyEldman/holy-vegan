@@ -1,10 +1,10 @@
-export const sendForm = (user,data) => {
+export const sendForm = (auth,data) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
-        const firebase = getFirebase();
         const firestore = getFirestore();
-        firestore.collection('users').add({
-            data
-        }).then(res => console.log(res))
+        const db = firestore.collection('users')
+        db.doc(auth.uid).update({
+            "cook.details":data
+        }).then(()=> console.log('document updated'))
             .catch(err=>console.log(err))
     }};
 

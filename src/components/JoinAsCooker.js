@@ -6,7 +6,7 @@ import firebase from "../config/fbConfig";
 
 const db = firebase.firestore().collection('users');
 
-const JoinAsCooker = ({profile,auth}) => {
+const JoinAsCooker = ({profile,auth, sendForm}) => {
     const [userName, setUserName] = useState('');
     const [nameOfCookPlace, setNameOfCookPlace] = useState('')
     const [city, setCity]= useState('');
@@ -42,10 +42,12 @@ const JoinAsCooker = ({profile,auth}) => {
             closingHour}
         }
         console.log(data)
-        db.doc(auth.uid).update({
-            "cook.details":data
-        }).then(()=> console.log('docoment updated'))
-        // sendForm(data)
+
+        // db.doc(auth.uid).update({
+        //     "cook.details":data
+        // }).then(()=> console.log('document updated'))
+        sendForm(auth,data)
+
     };
 
     const handleCheckBox = (e) => {
@@ -68,7 +70,6 @@ const JoinAsCooker = ({profile,auth}) => {
         </div>
     );
 
-    console.log(profile.userName)
     return (
         <div className="row">
             <div className="col-12 p-lg-5">
@@ -190,4 +191,13 @@ export default connect(mapStateToProps, mapDispatchToProps)(JoinAsCooker);
 
 
 //things to be done
+
+// check if need to use redux and reducer for form sent opreation. if yes, build it.
+//if form sent show message and change button to "עדכן"
+
+//add image opeartion to data sent.
+//show little image if possible after image uploaded.
+
+//later on fetch data to show if allready form sent
 // 1. format code, include map and reducing size, code NOT DRY.
+//validation of the form
